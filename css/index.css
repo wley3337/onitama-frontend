@@ -19,8 +19,6 @@
   display: grid;
   grid-template-columns: repeat(5, 20%);
   grid-template-rows: repeat(5, 20%);
-  /* border: 1px solid rgb(220, 225, 230);
-  border-radius: 4px; */
 }
 
 #general-container {
