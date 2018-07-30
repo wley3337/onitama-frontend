@@ -1,6 +1,6 @@
-/* #board {
+#board {
   display: inline-grid;
-  width: 600px;
+  width: 40%;
   height: 600px;
   grid-template-columns: repeat(5, 20%);
   grid-template-rows: repeat(5, 20%);
@@ -12,7 +12,7 @@
 #red-team-container {
   background-color: red;
   display: inline-grid;
-  width: 250px;
+  width: 30%;
   height: 600px;
 
 }
@@ -20,10 +20,10 @@
 #blue-team-container {
   background-color: blue;
   display: inline-grid;
-  width: 250px;
+  width: 30%;
   height: 600px;
 }
-
+/* 
 #upper-container {
 
 } */
