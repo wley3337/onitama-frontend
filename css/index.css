@@ -1,29 +1,33 @@
-/* #board {
-  display: inline-grid;
-  width: 600px;
-  height: 600px;
-  grid-template-columns: repeat(5, 20%);
-  grid-template-rows: repeat(5, 20%);
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  background-color: green;
+#red-team-container {
+  float: left;
+  width: 30%;
 }
 
-#red-team-container {
-  background-color: red;
-  display: inline-grid;
-  width: 250px;
-  height: 600px;
-
+#board-container {
+  float: left;
+  width: 40%;
 }
 
 #blue-team-container {
-  background-color: blue;
-  display: inline-grid;
-  width: 250px;
-  height: 600px;
+  float: left;
+  width: 30%;
 }
 
-#upper-container {
+#board {
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+  grid-template-rows: repeat(5, 20%);
+  /* border: 1px solid rgb(220, 225, 230);
+  border-radius: 4px; */
+}
 
-} */
+#general-container {
+  padding-top: 40px;
+}
+
+.box {
+  border: 1px solid rgb(220, 225, 230);
+  border-radius: 4px;
+}
