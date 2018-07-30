@@ -27,3 +27,18 @@
 #upper-container {
 
 } */
+
+
+#card-move {
+  padding-top: 4px;
+  padding-left: 4px;
+  display: inline-grid;
+  text-align: center;
+  width: 120px;
+  height: 120px;
+  grid-template-columns: repeat(5, 12%);
+  grid-template-rows: repeat(5, 12%);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  background-color: rgb(117, 0, 128);
+}
