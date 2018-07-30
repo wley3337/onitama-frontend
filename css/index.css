@@ -1,6 +1,9 @@
 #red-team-container {
+  height: 500px;
   float: left;
   width: 30%;
+  display: grid;
+  grid-template-rows: repeat(3, 33.3%)
 }
 
 #board-container {
@@ -9,8 +12,11 @@
 }
 
 #blue-team-container {
+  height: 500px;
   float: left;
   width: 30%;
+  display: grid;
+  grid-template-rows: repeat(3, 33.3%)
 }
 
 
