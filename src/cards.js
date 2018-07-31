@@ -40,7 +40,6 @@ class Card{
 
             //label button
             moveButton.innerText = this.moves.indexOf(move) + 1;
-
             //render button to page
             buttonsContainer.appendChild(moveButton);
             //click event listener
