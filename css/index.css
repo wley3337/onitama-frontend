@@ -46,7 +46,36 @@
   padding-top: 40px;
 }
 
+#on-deck-card-container {
+  height: 175px;
+  width: 30%;
+  float: left;
+}
+
+.fill {
+  height: 175px;
+  width: 35%;
+  float: left;
+}
+
 .box {
   border: 1px solid rgb(220, 225, 230);
   border-radius: 4px;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.sensei {
+  border-color: white;
+  border-radius: 30px;
+}
+
+.highlight {
+  background-color: yellow;
 }
