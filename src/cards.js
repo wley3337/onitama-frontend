@@ -28,18 +28,17 @@ class Card{
             // const moveButton = document.createElement('button');
 
             //invert x,y for blue orientation
-
             if(color === 'blue'){
                 move.x = move.x * -1;
                 move.y = move.y * -1;
-            }
+              }
+           
 
             //add dataset values for event listener access to move
             // moveButton.dataset.x = move.x;
             // moveButton.dataset.y = move.y;
 
-            //label button
-            // moveButton.innerText = this.moves.indexOf(move) + 1;
+           
             //render button to page
             // buttonsContainer.appendChild(moveButton);
             //click event listener

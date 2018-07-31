@@ -107,6 +107,8 @@ function activateCard(e) {
     for(const move of card.moves){
     
       if(color === 'blue'){
+        //look at this
+        
         move.x = move.x * -1;
         move.y = move.y * -1;
       }
