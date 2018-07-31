@@ -17,7 +17,7 @@ class Piece {
       pieces.forEach(piece => {
         let newPiece = new Piece(piece.id, piece.player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
         newPiece.renderPieceOnBoard()
-        newPiece.renderPiecesButtons()
+        if (newPiece.color === "red") {newPiece.renderPiecesButtons()}
       })
     })
   }

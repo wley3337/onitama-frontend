@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
   Piece.fetchPieces()
   Card.chooseFive()
+  initializePlayerIndication("Red")
 })
 
 //    F E T C H   R E Q U E S T S
@@ -77,14 +78,25 @@ function pieceButtonClickHandler(e) {
   square.classList.toggle(`highlight`)
   e.target.dataset.clicked = true
 
-  debugger
-
   document.getElementById(`${e.target.dataset.color}-card-1`).addEventListener("click", activateCard)
   document.getElementById(`${e.target.dataset.color}-card-2`).addEventListener("click", activateCard)
 }
 
 
 //     H E L P E R S     //
+
+function changePlayerIndication() {
+  let indicatorBar = document.querySelector("#indicator-bar")
+  indicatorBar.classList.toggle("red")
+  indicatorBar.classList.toggle("blue")
+  indicatorBar.innerHTML = ""
+}
+
+function initializePlayerIndication(color) {
+  let indicatorBar = document.querySelector("#indicator-bar")
+  indicatorBar.classList.add("red")
+  indicatorBar.innerHTML = `<h3>${color} Player Go!</h3>`
+}
 
 function activateCard(e) {
   console.log(e)
@@ -106,8 +118,18 @@ function getSquare(x, y) {
   return document.getElementById(`${x}-${y}`)
 }
 
-function winningConditions() {
-
+function winByClearingOpponents() {
+  let red = 0
+  let blue = 0
+  getAllBoardPieces().forEach(piece => {
+    piece.color === "red" ? red+=1 : blue+=1
+  })
+  if (red === 0) {
+    console.log("blue wins")
+  } else if (blue === 0) {
+    console.log("red wins")
+  }
+  console.log(`red: ${red}, blue: ${blue}`)
 }
 
 // can this move to cards.js at some point?
@@ -118,6 +140,17 @@ function createCard(cardId, color, cardContainerNumber){
           getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
           newCard.cardMoveDisplay(color, cardContainerNumber)
     })
+}
+
+function getAllBoardPieces() {
+  let allBoardChildren = Array.from(document.querySelector("#board").children)
+  let pieces = []
+  allBoardChildren.forEach(child => {
+    if (child.dataset.id) {
+      pieces.push({"id": child.dataset.id, "coordinates": child.id, "color": child.dataset.color})
+    }
+  })
+  return pieces
 }
 
 // function showActivePlayer() {
