@@ -21,19 +21,7 @@
 
 
 
-#card-move {
-  padding-top: 4px;
-  padding-left: 4px;
-  display: inline-grid;
-  text-align: center;
-  width: 120px;
-  height: 120px;
-  grid-template-columns: repeat(5, 12%);
-  grid-template-rows: repeat(5, 12%);
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  background-color: rgb(117, 0, 128);
-}
+
 #board {
   width: 500px;
   height: 500px;
@@ -50,3 +38,45 @@
   border: 1px solid rgb(220, 225, 230);
   border-radius: 4px;
 }
+
+/* styling for card area */
+
+#red-card-2-move, #red-card-1-move, #blue-card-1-move,  #blue-card-2-move {
+  padding-top: 4px;
+  padding-left: 4px;
+  display: inline-grid;
+  text-align: center;
+  width: 120px;
+  height: 120px;
+  grid-template-columns: repeat(5, 12%);
+  grid-template-rows: repeat(5, 12%);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  background-color: rgb(21, 195, 218);
+}
+
+span{
+  background-color: blanchedalmond;
+}
+
+.move {
+  background-color: rgb(255, 251, 0); 
+  color: black;
+}
+
+.character {
+  background-color: black;
+}
+#red-card-1, #red-card-2, #blue-card-1, #blue-card-2{
+  display: grid;
+  grid-template-columns: 35% 60%;
+  grid-row-gap: 1%;
+}
+
+/* #blue-card-2-move{
+  flex-grow: 50;
+} */
+/* .card-text{
+  display: flex;
+  flex-flow: column wrap;
+}  */
