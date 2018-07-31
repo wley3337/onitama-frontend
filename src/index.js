@@ -74,10 +74,11 @@ function createCard(cardId, color, cardContainerNumber){
 
 
   function selectMove(e){
+      //waiting on logic
       console.log(e);
       debugger;
   }
-
+  //--------hover function for card buttons on 
   function hoverMove(e){
     event.stopPropagation();
     const pieceLocation = {x: 3, y: 2}
@@ -87,7 +88,7 @@ function createCard(cardId, color, cardContainerNumber){
     potentialMove.classList.add('move')
     
   }
-
+//----------hover function for card buttons off
   function hoverOff(e){
     const pieceLocation = {x: 3, y: 2}
     const moveX = parseInt(e.target.dataset.x);
