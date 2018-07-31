@@ -60,10 +60,23 @@ span{
 }
 
 .move {
-  background-color: red; 
+  background-color: rgb(255, 251, 0); 
   color: black;
 }
 
 .character {
   background-color: black;
 }
+#red-card-1, #red-card-2, #blue-card-1, #blue-card-2{
+  display: grid;
+  grid-template-columns: 35% 60%;
+  grid-row-gap: 1%;
+}
+
+/* #blue-card-2-move{
+  flex-grow: 50;
+} */
+/* .card-text{
+  display: flex;
+  flex-flow: column wrap;
+}  */

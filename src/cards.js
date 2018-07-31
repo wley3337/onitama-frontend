@@ -33,7 +33,7 @@ class Card{
                 move.x = move.x * -1;
                 move.y = move.y * -1;
             }
-            console.log(move.x, move.y, color);
+            
             //add dataset values for event listener access to move
             moveButton.dataset.x = move.x;
             moveButton.dataset.y = move.y;
@@ -47,7 +47,7 @@ class Card{
             buttonsContainer.lastChild.addEventListener('click', selectMove)
             //hover event listenr
             buttonsContainer.lastChild.addEventListener('mouseover', hoverMove)
-            addEventListener('mouseout', hoverOff)
+            buttonsContainer.lastChild.addEventListener('mouseout', hoverOff)
 
         }
 
