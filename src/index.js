@@ -77,8 +77,6 @@ function pieceButtonClickHandler(e) {
   square.classList.toggle(`highlight`)
   e.target.dataset.clicked = true
 
-  debugger
-
   document.getElementById(`${e.target.dataset.color}-card-1`).addEventListener("click", activateCard)
   document.getElementById(`${e.target.dataset.color}-card-2`).addEventListener("click", activateCard)
 }
@@ -87,8 +85,61 @@ function pieceButtonClickHandler(e) {
 //     H E L P E R S     //
 
 function activateCard(e) {
-  console.log(e)
-  debugger
+  
+  //gets dataset information of current piece
+  const pieceButtonArray = e.currentTarget.parentElement.children["0"].childNodes
+  let buttonDataSet;
+  for(let button of pieceButtonArray){
+     if(button.dataset.clicked === 'true'){
+       buttonDataSet = button.dataset
+      }
+    }
+
+ //toggle buttons back on
+  const color = e.currentTarget.id.split("-")[0];
+  const cardNumber = e.currentTarget.id.split("-")[2];
+  const buttonContainer = document.getElementById(`${color}-card-${cardNumber}-buttons`)
+  buttonContainer.classList.toggle("hidden");
+  getCard(buttonContainer.dataset.cardId).then(card =>{
+    let validMoveCounter = 1;
+ 
+    //evaluate moves validity 
+    for(const move of card.moves){
+    
+      if(color === 'blue'){
+        move.x = move.x * -1;
+        move.y = move.y * -1;
+      }
+      console.log(buttonDataSet.x, buttonDataSet.y)
+      if(move.x + parseInt(buttonDataSet.x) <= 4 && move.x + parseInt(buttonDataSet.x) >= 0){
+        if(move.y + parseInt(buttonDataSet.y) <= 4 && move.y + parseInt(buttonDataSet.y)){
+          
+          //create button
+          const square = document.getElementById(`${color}-${cardNumber}-${move.id}`);
+          square.innerText = validMoveCounter;
+          const moveButton = document.createElement('button')
+           //add dataset values for event listener access to move
+            moveButton.dataset.x = move.x;
+            moveButton.dataset.y = move.y;
+
+             //label button
+            moveButton.innerText = validMoveCounter;
+            validMoveCounter++;
+            //render button to screen
+
+          buttonContainer.appendChild(moveButton)
+
+           //click event listener
+            buttonContainer.lastChild.addEventListener('click', selectMove)
+            //hover event listeners
+            buttonContainer.lastChild.addEventListener('mouseover', hoverMove)
+            buttonContainer.lastChild.addEventListener('mouseout', hoverOff)
+        }
+      }
+      
+    }
+  })
+  
 }
 
 function undoLeftoverHighlight(siblings) {

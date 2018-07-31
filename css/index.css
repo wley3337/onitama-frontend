@@ -85,6 +85,9 @@ span{
   grid-row-gap: 1%;
 }
 
+.hidden{
+  visibility: hidden;
+}
 
 
 /*   P I E C E   S T Y L I N G   */
