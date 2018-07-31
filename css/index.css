@@ -1,3 +1,5 @@
+/*   G E N E R A L    S T Y L I N G   */
+
 #red-team-container {
   height: 500px;
   float: left;
@@ -19,9 +21,6 @@
   grid-template-rows: repeat(3, 33.3%)
 }
 
-
-
-
 #board {
   width: 500px;
   height: 500px;
@@ -34,12 +33,25 @@
   padding-top: 40px;
 }
 
+#on-deck-card-container {
+  height: 175px;
+  width: 30%;
+  float: left;
+}
+
+.fill {
+  height: 175px;
+  width: 35%;
+  float: left;
+}
+
 .box {
   border: 1px solid rgb(220, 225, 230);
   border-radius: 4px;
 }
 
-/* styling for card area */
+
+/*   C A R D    A R E A    S T Y L I N G   */
 
 #red-card-2-move, #red-card-1-move, #blue-card-1-move,  #blue-card-2-move {
   padding-top: 4px;
@@ -59,10 +71,10 @@ span{
   background-color: blanchedalmond;
 }
 
-.move {
-  background-color: rgb(255, 251, 0); 
+/* .move {
+  background-color: rgb(255, 251, 0);
   color: black;
-}
+} */
 
 .character {
   background-color: black;
@@ -73,10 +85,31 @@ span{
   grid-row-gap: 1%;
 }
 
-/* #blue-card-2-move{
-  flex-grow: 50;
-} */
-/* .card-text{
-  display: flex;
-  flex-flow: column wrap;
-}  */
+
+
+/*   P I E C E   S T Y L I N G   */
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.sensei {
+  border-color: white;
+  border-radius: 30px;
+}
+
+.highlight {
+  background-color: rgb(255, 251, 0, .7);
+}
+
+
+/*  K E E P   A T   B O T T O M  */
+.move {
+  background-color: rgb(255, 251, 0, .7);
+  color: black;
+
+}
