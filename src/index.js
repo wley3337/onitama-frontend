@@ -79,9 +79,43 @@ function getMoveGridContainer(color,number){
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
-    //waiting on logic
-    console.log(e);
-    debugger;
+  const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
+  let moveFromNode = getSquare(pieceLocation.x, pieceLocation.y)
+  let moveFromId = parseInt(moveFromNode.dataset.id)
+  let moveToNode = getSquare((pieceLocation.x + pieceMove.x), (pieceLocation.y + pieceMove.y))
+  let moveToId = moveToNode.dataset.id
+
+  movePiece(moveFromNode, moveToNode)
+  if (evaluateWinConditions()) {
+    //make it so someone wins
+  } else {
+    changePlayerIndication()
+
+    // T H I S   I S   T H E   P A T C H   S T U F F
+    let data1 = {x: pieceLocation.x, y: pieceLocation.y}
+    debugger
+    patchPiece(moveFromId, data1)
+    if (moveToId) {
+      let data2 = {id: parseInt(moveToId), on_board: false}
+      patchPiece(data2)
+    }
+  }
+}
+
+function patchPiece(id, data) {
+  debugger
+  fetch(`http://localhost:3000/pieces/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(resp => resp.json())
+  .then(piece => {
+    debugger
+  })
 }
 
 function clearAllButtonsAndTextFields(){
@@ -100,6 +134,33 @@ function clearChildrenText(node){
     child.innerText ="";
   }
 }
+
+function movePiece(fromNode, toNode) {
+  fromNode.classList.toggle("highlight")
+  toNode.classList.toggle("move")
+  toNode.classList.toggle(`${fromNode.dataset.color}`)
+  toNode.dataset.color = fromNode.dataset.color
+  toNode.dataset.id = fromNode.dataset.id
+  toNode.dataset.rank = fromNode.dataset.rank
+
+  if (fromNode.dataset.rank === "sensei") {
+    fromNode.classList.toggle("sensei")
+    toNode.classList.toggle("sensei")
+  }
+  fromNode.dataset.color = ""
+  fromNode.dataset.id = ""
+  fromNode.dataset.rank = ""
+}
+
+// function patchPlayerFetch(id, data) {
+//   fetch(`http://localhost:3000/players/${id}`, {
+//     method: "PATCH"
+//     mode: "cors",
+//     credentials: "same-origin",
+//     headers: {"Content-Type": "application/json; charset=utf-8"},
+//     body: JSON.stringify(data)
+//   })
+// }
 
 //--------hover function for card buttons on
 function hoverMove(e){
@@ -192,11 +253,12 @@ function activateCard(e) {
       if(moveX + parseInt(buttonDataSet.x) <= 4 && moveX + parseInt(buttonDataSet.x) >= 0){
 
         if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y) >= 0){
-        const destinationX = moveX + parseInt(buttonDataSet.x); 
+        const destinationX = moveX + parseInt(buttonDataSet.x);
+
         const destinationY = moveY + parseInt(buttonDataSet.y);
-        
+
         if(getSquare(destinationX, destinationY).dataset.color != color){
-                 
+
           //create button
           const square = document.getElementById(`${color}-${cardNumber}-${move.id}`);
           square.innerText = validMoveCounter;
@@ -277,33 +339,54 @@ function getAllBoardPieces() {
 
 
 //     W I N   C O N D I T I O N   H E L P E R S     //
+
+function evaluateWinConditions() {
+  let result1 = winByClearingOpponents()
+  let result2 = winBySenseiPlacement()
+  let returnValue
+
+  if (result1 === "red wins" || result2 === "red wins") {
+    returnValue = "red wins"
+  } else if (result1 === "blue wins" || result2 === "blue wins") {
+    returnValue = "blue wins"
+  } else if (result1 === false && result2 === false) {
+    returnValue = false
+  }
+  return returnValue
+}
+
 function winByClearingOpponents() {
   let red = 0
   let blue = 0
+  let result
   getAllBoardPieces().forEach(piece => {
     piece.color === "red" ? red+=1 : blue+=1
   })
   if (red === 0) {
-    console.log("blue wins")
+    result = "blue wins"
   } else if (blue === 0) {
-    console.log("red wins")
+    result = "red wins"
+  } else {
+    result = false
   }
-  console.log(`red: ${red}, blue: ${blue}`)
+  return result
 }
 
 function winBySenseiPlacement() {
   let pieces = getAllBoardPieces()
+  let result
   pieces.forEach(piece => {
     if (piece.rank === "sensei") {
       if (piece.color === "red" && piece.coordinates === "4-2") {
-        console.log("red wins")
+        result = "red wins"
       } else if (piece.color === "blue" && piece.coordinates === "0-2") {
-        console.log("blue wins")
+        result = "blue wins"
       } else {
-        console.log("still good")
+        result = false
       }
     }
   })
+  return result
 }
 
 //     F E T C H   P A T C H E S     //
@@ -320,4 +403,5 @@ function changePlayerIndication() {
   indicatorBar.classList.toggle("red")
   indicatorBar.classList.toggle("blue")
   indicatorBar.innerHTML = ""
+
 }
