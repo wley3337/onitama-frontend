@@ -18,6 +18,14 @@ function getCard(cardId){
     }).then(response => response.json());
 }
 
+function getPlayers(){
+  return fetch(`http://127.0.0.1:3000/players/`,{
+    method: "GET",
+        headers:{
+            "Content-Type": "application/json; charset=utf-8"
+        }
+  }).then(response => response.json())
+}
 
 //    G E T    D O M    E L E M E N T S    //
 function getPlayerCard(color,num){
@@ -42,6 +50,14 @@ function getBoardSquare(x,y){
 
 function getOnDeckCardContainer(){
   return document.getElementById('on-deck-card-container')
+}
+
+function getOnDeckCardMoveContainer(){
+  return document.getElementById('on-deck-card-move')
+}
+
+function getSquare(x, y) {
+  return document.getElementById(`${x}-${y}`)
 }
 
 
@@ -142,7 +158,10 @@ function activateCard(e) {
       if(moveX + parseInt(buttonDataSet.x) <= 4 && moveX + parseInt(buttonDataSet.x) >= 0){
 
         if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y)){
-
+        const destinationX = moveX + parseInt(buttonDataSet.x); 
+        const destinationY = moveY + parseInt(buttonDataSet.y);
+        if(getSquare(destinationX, destinationY).dataset.color != color){
+                 
           //create button
           const square = document.getElementById(`${color}-${cardNumber}-${move.id}`);
           square.innerText = validMoveCounter;
@@ -167,6 +186,7 @@ function activateCard(e) {
             //hover event listeners
             buttonContainer.lastChild.addEventListener('mouseover', hoverMove)
             buttonContainer.lastChild.addEventListener('mouseout', hoverOff)
+         }
         }
       }
 
@@ -186,20 +206,23 @@ function undoLeftoverHighlight(siblings) {
   })
 }
 
-function getSquare(x, y) {
-  return document.getElementById(`${x}-${y}`)
-}
+
 
 
 
 // can this move to cards.js at some point?
 function createCard(cardId, color, cardContainerNumber){
     getCard(cardId).then(card => {
+      const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+        if(color === "on-deck"){
+          newCard.moveBoard()
+        }else{
           const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
           getPlayerCardTitle(color,cardContainerNumber).innerText = newCard.title;
           getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
           newCard.cardMoveDisplay(color, cardContainerNumber)
           getPlayerCard(color,cardContainerNumber).dataset.cardId = card.id;
+        }
     })
 }
 

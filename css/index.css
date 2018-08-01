@@ -65,7 +65,7 @@ body {
 
 /*   C A R D    A R E A    S T Y L I N G   */
 
-#red-card-2-move, #red-card-1-move, #blue-card-1-move,  #blue-card-2-move {
+#red-card-2-move, #red-card-1-move, #blue-card-1-move,  #blue-card-2-move, #on-deck-card-move{
   padding-top: 4px;
   padding-left: 4px;
   display: inline-grid;
@@ -91,7 +91,7 @@ span{
 .character {
   background-color: black;
 }
-#red-card-1, #red-card-2, #blue-card-1, #blue-card-2{
+#red-card-1, #red-card-2, #blue-card-1, #blue-card-2, #on-deck-card-container{
   display: grid;
   grid-template-columns: 35% 60%;
   grid-row-gap: 1%;
