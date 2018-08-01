@@ -12,12 +12,12 @@ class Player {
         player.pieces.forEach(piece => {
           let newPiece = new Piece(piece.id, player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
           newPiece.renderPieceOnBoard()
-          let color = document.querySelector("#indicator-bar").classList.value
-          if (newPiece.color === color) {newPiece.renderPiecesButtons()}
+          newPiece.renderPiecesButtons()
         })
       })
     })
   }
+
 
 
 }
