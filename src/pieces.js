@@ -10,17 +10,19 @@ class Piece {
     this.y = y
   }
 
-  static fetchPieces() {
-    fetch('http://localhost:3000/pieces')
-    .then(resp => resp.json())
-    .then(pieces => {
-      pieces.forEach(piece => {
-        let newPiece = new Piece(piece.id, piece.player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
-        newPiece.renderPieceOnBoard()
-        if (newPiece.color === "red") {newPiece.renderPiecesButtons()}
-      })
-    })
-  }
+  // static fetchPieces() {
+  //   fetch('http://localhost:3000/pieces')
+  //   .then(resp => resp.json())
+  //   .then(pieces => {
+  //     pieces.forEach(piece => {
+  //       let newPiece = new Piece(piece.id, piece.player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
+  //       newPiece.renderPieceOnBoard()
+  //       let color = document.querySelector("#indicator-bar").classList.value
+  //       if (newPiece.color === color) {newPiece.renderPiecesButtons()}
+  //     })
+  //   })
+  // }
+
 
   renderPieceOnBoard() {
     let square = document.getElementById(`${this.x}-${this.y}`)
