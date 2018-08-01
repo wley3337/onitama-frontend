@@ -132,6 +132,11 @@ function winByClearingOpponents() {
   console.log(`red: ${red}, blue: ${blue}`)
 }
 
+function winBySenseiPlacement() {
+  debugger
+  getAllBoardPieces()
+}
+
 // can this move to cards.js at some point?
 function createCard(cardId, color, cardContainerNumber){
     getCard(cardId).then(card => {
