@@ -1,5 +1,9 @@
 /*   G E N E R A L    S T Y L I N G   */
 
+body {
+  background-color: blanchedalmond
+}
+
 #red-team-container {
   height: 500px;
   float: left;
@@ -30,7 +34,7 @@
 }
 
 #general-container {
-  padding-top: 40px;
+  padding-top: 10px;
 }
 
 #on-deck-card-container {
@@ -39,9 +43,17 @@
   float: left;
 }
 
+#indicator-bar {
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  color: white;
+  opacity: .7
+}
+
 .fill {
-  height: 175px;
-  width: 35%;
+  /* height: 175px; */
+  width: 34%;
   float: left;
 }
 
@@ -94,10 +106,12 @@ span{
 
 .red {
   background-color: red;
+  opacity: .7
 }
 
 .blue {
   background-color: blue;
+  opacity: .7
 }
 
 .sensei {
