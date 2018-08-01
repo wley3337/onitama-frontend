@@ -49,8 +49,9 @@ class Card{
                 createCard(cardId, "blue", cardCount -1);
                 cardCount++;
             }else{
+                createCard(cardId, "on-deck", cardCount + 1)
                 console.log("5th card:", cardId, gameCards)
-
+                
                 // createCard(cardId, "black", 1);
             }
         }
@@ -58,16 +59,41 @@ class Card{
 
     //attempt to dynamicly generate card move board
     moveBoard(){
-        const onDeckDiv = document.createElement('div');
-        onDeckDiv.id = "on-deck-card-move";
-        onDeckDiv.classList.add("card-move");
-        
-        for(let i = 1; i<25;i++){
-            const boardSpan = document.createElement('span');
-            boardSpan.id = `on-deck-${i}`;
-        }
-    //   const span =  <span id='blue-2-24' data-moveId="" >24</span>;
+       
+        getPlayers().then(players => {
+           //get Active Player Color
+           let activePlayerColor;
+            for(let player of players){
+                const isActive = player.active_player
+                if(isActive === true){
+                    activePlayerColor =player.name.split(" ")[0].toLowerCase();
+                }
+            }
+        if(activePlayerColor === 'red'){
+            for(let i = 1; i<25;i++){
+                const boardSpan = document.createElement('span');
+                boardSpan.id = `on-deck-${i}`;
+                getOnDeckCardMoveContainer().appendChild(boardSpan)
+            };
+            const charSpan = document.createElement('span');
+            charSpan.id = `on-deck-25`;
+            charSpan.classList.add("character")
+            document.getElementById('on-deck-12').insertAdjacentElement('afterend',charSpan)
 
+        }else{
+            for(let i = 1; i<25;i++){
+                const boardSpan = document.createElement('span');
+                boardSpan.id = `on-deck-${i}`;
+                getOnDeckCardMoveContainer().prepend(boardSpan)
+
+            };
+            const charSpan = document.createElement('span');
+            charSpan.id = `on-deck-25`;
+            charSpan.classList.add("character")
+            document.getElementById('on-deck-13').insertAdjacentElement('afterend',charSpan)
+        }
+   
+        })
         
     }
 
