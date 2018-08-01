@@ -100,6 +100,9 @@ function pieceButtonClickHandler(e) {
   square.classList.toggle(`highlight`)
   e.target.dataset.clicked = true
 
+
+
+  //addevent listenener
   document.getElementById(`${e.target.dataset.color}-card-1`).addEventListener("click", activateCard)
   document.getElementById(`${e.target.dataset.color}-card-2`).addEventListener("click", activateCard)
 }
