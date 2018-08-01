@@ -63,12 +63,20 @@ class Card{
         getPlayers().then(players => {
            //get Active Player Color
            let activePlayerColor;
+           let activePlayerName;
             for(let player of players){
                 const isActive = player.active_player
                 if(isActive === true){
                     activePlayerColor =player.name.split(" ")[0].toLowerCase();
+                    activePlayerName = player.name;
                 }
             }
+
+            //clear move board
+            while (getOnDeckCardMoveContainer().firstChild) {
+                getOnDeckCardMoveContainer().removeChild(getOnDeckCardMoveContainer().firstChild);
+            }
+
         if(activePlayerColor === 'red'){
             for(let i = 1; i<25;i++){
                 const boardSpan = document.createElement('span');
@@ -92,9 +100,23 @@ class Card{
             charSpan.classList.add("character")
             document.getElementById('on-deck-13').insertAdjacentElement('afterend',charSpan)
         }
-   
-        })
-        
+
+        //displays moves on the grid
+        for(const move of this.moves){
+            const square = document.getElementById(`on-deck-${move.id}`);
+                square.classList.add('move')
+        }
+
+
+        //display 5th card title
+        getOnDeckCardTitle().innerText = this.title;
+
+        //display 5th card quote
+        getOnDeckCardQuote().innerText = this.quote;
+
+         //display 5th card "will go to" in button container
+         getOnDeckCardButtonContainer().innerText = `This card will go to: ${activePlayerName}`
+        })   
     }
 
 

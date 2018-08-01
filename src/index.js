@@ -56,8 +56,23 @@ function getOnDeckCardMoveContainer(){
   return document.getElementById('on-deck-card-move')
 }
 
+function getOnDeckCardTitle(){
+  return document.getElementById('on-deck-card-title')
+}
+function getOnDeckCardQuote(){
+  return document.getElementById('on-deck-card-quote')
+}
+
+function getOnDeckCardButtonContainer(){
+  return document.getElementById('on-deck-card-buttons')
+}
+
 function getSquare(x, y) {
   return document.getElementById(`${x}-${y}`)
+}
+
+function getMoveGridContainer(color,number){
+  return document.getElementById(`${color}-card-${number}-move`)
 }
 
 
@@ -68,6 +83,24 @@ function selectMove(e){
     console.log(e);
     debugger;
 }
+
+function clearAllButtonsAndTextFields(){
+  getPlayerCardButtons("blue",1).innerHTML ='';
+  getPlayerCardButtons("blue",2).innerHTML ='';
+  getPlayerCardButtons("red",1).innerHTML ='';
+  getPlayerCardButtons("red",2).innerHTML ='';
+  clearChildrenText(getMoveGridContainer("red",1));
+  clearChildrenText(getMoveGridContainer("red",2));
+  clearChildrenText(getMoveGridContainer("blue",1));
+  clearChildrenText(getMoveGridContainer("blue",2));
+}
+
+function clearChildrenText(node){
+  for(let child of node.children){
+    child.innerText ="";
+  }
+}
+
 //--------hover function for card buttons on
 function hoverMove(e){
   event.stopPropagation();
@@ -100,7 +133,7 @@ function pieceButtonClickHandler(e) {
   square.classList.toggle(`highlight`)
   e.target.dataset.clicked = true
 
-
+  clearAllButtonsAndTextFields();
 
   //addevent listenener
   document.getElementById(`${e.target.dataset.color}-card-1`).addEventListener("click", activateCard)
@@ -158,9 +191,10 @@ function activateCard(e) {
 
       if(moveX + parseInt(buttonDataSet.x) <= 4 && moveX + parseInt(buttonDataSet.x) >= 0){
 
-        if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y)){
+        if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y) >= 0){
         const destinationX = moveX + parseInt(buttonDataSet.x); 
         const destinationY = moveY + parseInt(buttonDataSet.y);
+        
         if(getSquare(destinationX, destinationY).dataset.color != color){
                  
           //create button
