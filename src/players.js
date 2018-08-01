@@ -1,9 +1,23 @@
 class Player {
 
-  // constructor(name, active_player) {
-  //   this.name = name
-  //   this.active_player = active_player
-  // }
+//     F E T C H   P L A Y E R   I N F O     //
+  static getPlayers() {
+    fetch(`http://localhost:3000/players`)
+    .then(resp => resp.json())
+    .then(players => {
+      players.forEach(player => {
+        if (player.active_player === true) {
+          initializePlayerIndication(player.pieces[0].color)
+        }
+        player.pieces.forEach(piece => {
+          let newPiece = new Piece(piece.id, player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
+          newPiece.renderPieceOnBoard()
+          let color = document.querySelector("#indicator-bar").classList.value
+          if (newPiece.color === color) {newPiece.renderPiecesButtons()}
+        })
+      })
+    })
+  }
 
 
 }

@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
-  Piece.fetchPieces()
+  Player.getPlayers()
   Card.chooseFive()
-  initializePlayerIndication("Red")
+
 })
 
-//    F E T C H   R E Q U E S T S
+//    F E T C H   R E Q U E S T S     //
 
 function getCard(cardId){
    return fetch('http://127.0.0.1:3000/cards/'+ cardId, {
@@ -91,17 +91,15 @@ function pieceButtonClickHandler(e) {
 
 //     H E L P E R S     //
 
-function changePlayerIndication() {
-  let indicatorBar = document.querySelector("#indicator-bar")
-  indicatorBar.classList.toggle("red")
-  indicatorBar.classList.toggle("blue")
-  indicatorBar.innerHTML = ""
-}
+
 
 function initializePlayerIndication(color) {
   let indicatorBar = document.querySelector("#indicator-bar")
-  indicatorBar.classList.add("red")
-  indicatorBar.innerHTML = `<h3>${color} Player Go!</h3>`
+  indicatorBar.classList.toggle("red")
+  indicatorBar.classList.toggle("blue")
+
+  indicatorBar.classList.toggle(color)
+  indicatorBar.innerHTML = `<h3>${color} player go!</h3>`
 }
 
 function activateCard(e) {
@@ -214,13 +212,7 @@ function getAllBoardPieces() {
   return pieces
 }
 
-// function showActivePlayer() {
-//   fetch(`http://localhost:3000/players`)
-//   .then(resp => resp.json())
-//   .then(players => {
-//     player.
-//   })
-// }
+
 
 
 
@@ -252,4 +244,20 @@ function winBySenseiPlacement() {
       }
     }
   })
+}
+
+//     F E T C H   P A T C H E S     //
+
+// active player, piece [x, y, on_board], card player_id
+
+//     C H A N G E   P L A Y E R     //
+
+// √change the player indication, show piece buttons for other player, rotate cards?
+
+
+function changePlayerIndication() {
+  let indicatorBar = document.querySelector("#indicator-bar")
+  indicatorBar.classList.toggle("red")
+  indicatorBar.classList.toggle("blue")
+  indicatorBar.innerHTML = ""
 }
