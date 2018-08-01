@@ -20,37 +20,11 @@ class Card{
 
         //displays moves on the grid
         for(const move of this.moves){
-
             const square = document.getElementById(`${color}-${cardContainerNumber}-${move.id}`);
                 square.classList.add('move')
-                // square.innerText = this.moves.indexOf(move) + 1;
-
-            // const moveButton = document.createElement('button');
-
-            //invert x,y for blue orientation
-            if(color === 'blue'){
-                move.x = move.x * -1;
-                move.y = move.y * -1;
-              }
-           
-
-            //add dataset values for event listener access to move
-            // moveButton.dataset.x = move.x;
-            // moveButton.dataset.y = move.y;
-
-           
-            //render button to page
-            // buttonsContainer.appendChild(moveButton);
-            //click event listener
-            // buttonsContainer.lastChild.addEventListener('click', selectMove)
-            //hover event listenr
-            // buttonsContainer.lastChild.addEventListener('mouseover', hoverMove)
-            // buttonsContainer.lastChild.addEventListener('mouseout', hoverOff)
-            
-
         }
+        //add card ID to button container for search
         buttonsContainer.dataset.cardId = this.id;
-        buttonsContainer.classList.add("hidden");
 
     }
 
@@ -66,6 +40,8 @@ class Card{
         }
         let cardCount = 0
         for(let cardId of gameCards){
+         
+            getOnDeckCardContainer().setAttribute(`data-card${cardCount +1}`,cardId);
             if(cardCount < 2){
                 createCard(cardId, "red", cardCount + 1);
                 cardCount++;
@@ -80,7 +56,20 @@ class Card{
         }
     }
 
+    //attempt to dynamicly generate card move board
+    moveBoard(){
+        const onDeckDiv = document.createElement('div');
+        onDeckDiv.id = "on-deck-card-move";
+        onDeckDiv.classList.add("card-move");
+        
+        for(let i = 1; i<25;i++){
+            const boardSpan = document.createElement('span');
+            boardSpan.id = `on-deck-${i}`;
+        }
+    //   const span =  <span id='blue-2-24' data-moveId="" >24</span>;
 
+        
+    }
 
 
 

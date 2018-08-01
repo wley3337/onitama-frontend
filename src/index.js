@@ -39,9 +39,14 @@ function getBoardSquare(x,y){
     return document.getElementById(`${x}-${y}`)
 }
 
+function getOnDeckCardContainer(){
+  return document.getElementById('on-deck-card-container')
+}
+
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
+  const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
     //waiting on logic
     console.log(e);
     debugger;
@@ -49,7 +54,8 @@ function selectMove(e){
 //--------hover function for card buttons on
 function hoverMove(e){
   event.stopPropagation();
-  const pieceLocation = {x: 3, y: 2}
+  
+  const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const moveX = parseInt(e.target.dataset.x);
   const moveY = parseInt(e.target.dataset.y);
   const potentialMove = getBoardSquare(pieceLocation.x + moveX, pieceLocation.y + moveY)
@@ -58,7 +64,7 @@ function hoverMove(e){
 }
 //----------hover function for card buttons off
 function hoverOff(e){
-  const pieceLocation = {x: 3, y: 2}
+  const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const moveX = parseInt(e.target.dataset.x);
   const moveY = parseInt(e.target.dataset.y);
   const potentialMove = getBoardSquare(pieceLocation.x + moveX, pieceLocation.y + moveY)
@@ -95,34 +101,45 @@ function activateCard(e) {
       }
     }
 
- //toggle buttons back on
+  //toggle buttons back on
   const color = e.currentTarget.id.split("-")[0];
   const cardNumber = e.currentTarget.id.split("-")[2];
   const buttonContainer = document.getElementById(`${color}-card-${cardNumber}-buttons`)
-  buttonContainer.classList.toggle("hidden");
+  buttonContainer.innerHTML = '';
+ 
+  //clears old text from options field
+  for( let span of e.currentTarget.firstElementChild.children){
+    span.innerText ='';
+  }
+  buttonContainer.innerHTML = 'Valid moves for this piece: <br> (click to refresh) <br>'
+
   getCard(buttonContainer.dataset.cardId).then(card =>{
     let validMoveCounter = 1;
- 
+    
     //evaluate moves validity 
     for(const move of card.moves){
-    
+        let moveX = move.x;
+        let moveY = move.y;
       if(color === 'blue'){
-        //look at this
-        
-        move.x = move.x * -1;
-        move.y = move.y * -1;
+        moveX = move.x * -1;
+        moveY = move.y * -1;
       }
-      console.log(buttonDataSet.x, buttonDataSet.y)
-      if(move.x + parseInt(buttonDataSet.x) <= 4 && move.x + parseInt(buttonDataSet.x) >= 0){
-        if(move.y + parseInt(buttonDataSet.y) <= 4 && move.y + parseInt(buttonDataSet.y)){
+      
+      if(moveX + parseInt(buttonDataSet.x) <= 4 && moveX + parseInt(buttonDataSet.x) >= 0){
+        
+        if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y)){
           
           //create button
           const square = document.getElementById(`${color}-${cardNumber}-${move.id}`);
           square.innerText = validMoveCounter;
           const moveButton = document.createElement('button')
            //add dataset values for event listener access to move
-            moveButton.dataset.x = move.x;
-            moveButton.dataset.y = move.y;
+            moveButton.dataset.x = moveX;
+            moveButton.dataset.y = moveY;
+            moveButton.dataset.pieceX = buttonDataSet.x;
+            moveButton.dataset.pieceY= buttonDataSet.y;
+            moveButton.dataset.pieceRank = buttonDataSet.rank;
+            moveButton.dataset.cardId = card.id;
 
              //label button
             moveButton.innerText = validMoveCounter;
@@ -130,7 +147,7 @@ function activateCard(e) {
             //render button to screen
 
           buttonContainer.appendChild(moveButton)
-
+         
            //click event listener
             buttonContainer.lastChild.addEventListener('click', selectMove)
             //hover event listeners
@@ -170,6 +187,7 @@ function createCard(cardId, color, cardContainerNumber){
           getPlayerCardTitle(color,cardContainerNumber).innerText = newCard.title;
           getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
           newCard.cardMoveDisplay(color, cardContainerNumber)
+          getPlayerCard(color,cardContainerNumber).dataset.cardId = card.id;
     })
 }
 
