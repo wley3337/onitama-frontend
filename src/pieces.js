@@ -27,6 +27,7 @@ class Piece {
     square.classList.add(`${this.color}`)
     square.dataset.id = `${this.id}`
     square.dataset.color = `${this.color}`
+    square.dataset.rank = `${this.rank}`
     if (this.rank === "sensei") {
       square.classList.add(`sensei`)
     }

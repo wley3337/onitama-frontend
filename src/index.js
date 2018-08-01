@@ -55,7 +55,7 @@ function selectMove(e){
 //--------hover function for card buttons on
 function hoverMove(e){
   event.stopPropagation();
-  
+
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const moveX = parseInt(e.target.dataset.x);
   const moveY = parseInt(e.target.dataset.y);
@@ -105,7 +105,7 @@ function initializePlayerIndication(color) {
 }
 
 function activateCard(e) {
-  
+
   //gets dataset information of current piece
   const pieceButtonArray = e.currentTarget.parentElement.children["0"].childNodes
   let buttonDataSet;
@@ -120,7 +120,7 @@ function activateCard(e) {
   const cardNumber = e.currentTarget.id.split("-")[2];
   const buttonContainer = document.getElementById(`${color}-card-${cardNumber}-buttons`)
   buttonContainer.innerHTML = '';
- 
+
   //clears old text from options field
   for( let span of e.currentTarget.firstElementChild.children){
     span.innerText ='';
@@ -129,8 +129,8 @@ function activateCard(e) {
 
   getCard(buttonContainer.dataset.cardId).then(card =>{
     let validMoveCounter = 1;
-    
-    //evaluate moves validity 
+
+    //evaluate moves validity
     for(const move of card.moves){
         let moveX = move.x;
         let moveY = move.y;
@@ -138,11 +138,11 @@ function activateCard(e) {
         moveX = move.x * -1;
         moveY = move.y * -1;
       }
-      
+
       if(moveX + parseInt(buttonDataSet.x) <= 4 && moveX + parseInt(buttonDataSet.x) >= 0){
-        
+
         if(moveY + parseInt(buttonDataSet.y) <= 4 && moveY + parseInt(buttonDataSet.y)){
-          
+
           //create button
           const square = document.getElementById(`${color}-${cardNumber}-${move.id}`);
           square.innerText = validMoveCounter;
@@ -161,7 +161,7 @@ function activateCard(e) {
             //render button to screen
 
           buttonContainer.appendChild(moveButton)
-         
+
            //click event listener
             buttonContainer.lastChild.addEventListener('click', selectMove)
             //hover event listeners
@@ -169,10 +169,10 @@ function activateCard(e) {
             buttonContainer.lastChild.addEventListener('mouseout', hoverOff)
         }
       }
-      
+
     }
   })
-  
+
 }
 
 function undoLeftoverHighlight(siblings) {
@@ -190,24 +190,7 @@ function getSquare(x, y) {
   return document.getElementById(`${x}-${y}`)
 }
 
-function winByClearingOpponents() {
-  let red = 0
-  let blue = 0
-  getAllBoardPieces().forEach(piece => {
-    piece.color === "red" ? red+=1 : blue+=1
-  })
-  if (red === 0) {
-    console.log("blue wins")
-  } else if (blue === 0) {
-    console.log("red wins")
-  }
-  console.log(`red: ${red}, blue: ${blue}`)
-}
 
-function winBySenseiPlacement() {
-  debugger
-  getAllBoardPieces()
-}
 
 // can this move to cards.js at some point?
 function createCard(cardId, color, cardContainerNumber){
@@ -225,7 +208,7 @@ function getAllBoardPieces() {
   let pieces = []
   allBoardChildren.forEach(child => {
     if (child.dataset.id) {
-      pieces.push({"id": child.dataset.id, "coordinates": child.id, "color": child.dataset.color})
+      pieces.push({"id": child.dataset.id, "coordinates": child.id, "color": child.dataset.color, "rank": child.dataset.rank})
     }
   })
   return pieces
@@ -238,3 +221,35 @@ function getAllBoardPieces() {
 //     player.
 //   })
 // }
+
+
+
+//     W I N   C O N D I T I O N   H E L P E R S     //
+function winByClearingOpponents() {
+  let red = 0
+  let blue = 0
+  getAllBoardPieces().forEach(piece => {
+    piece.color === "red" ? red+=1 : blue+=1
+  })
+  if (red === 0) {
+    console.log("blue wins")
+  } else if (blue === 0) {
+    console.log("red wins")
+  }
+  console.log(`red: ${red}, blue: ${blue}`)
+}
+
+function winBySenseiPlacement() {
+  let pieces = getAllBoardPieces()
+  pieces.forEach(piece => {
+    if (piece.rank === "sensei") {
+      if (piece.color === "red" && piece.coordinates === "4-2") {
+        console.log("red wins")
+      } else if (piece.color === "blue" && piece.coordinates === "0-2") {
+        console.log("blue wins")
+      } else {
+        console.log("still good")
+      }
+    }
+  })
+}
