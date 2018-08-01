@@ -18,6 +18,23 @@ function getCard(cardId){
     }).then(response => response.json());
 }
 
+function tryMe(){
+
+  data = {x:1, y:1};
+  fetch('http://localhost:3000/players/reset',{
+  method: "GET",
+  mode: "cors",
+  credentials: "same-origin",
+  headers:{
+    "Content-Type": "application/json; charset=utf-8"
+  },
+ 
+  }).then(response => response.json())
+  .then(console.log)
+  
+  
+}
+
 function getPlayers(){
   return fetch(`http://127.0.0.1:3000/players/`,{
     method: "GET",
