@@ -66,7 +66,7 @@ function selectMove(e){
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
   let moveFromNode = getSquare(pieceLocation.x, pieceLocation.y)
-  let moveFromId = moveFromNode.dataset.id
+  let moveFromId = parseInt(moveFromNode.dataset.id)
   let moveToNode = getSquare((pieceLocation.x + pieceMove.x), (pieceLocation.y + pieceMove.y))
   let moveToId = moveToNode.dataset.id
 
@@ -74,9 +74,12 @@ function selectMove(e){
   if (evaluateWinConditions()) {
     //make it so someone wins
   } else {
-    let data1 = {x: parseInt(pieceLocation.x), y: parseInt(pieceLocation.y)}
+    changePlayerIndication()
+
+    // T H I S   I S   T H E   P A T C H   S T U F F
+    let data1 = {x: pieceLocation.x, y: pieceLocation.y}
     debugger
-    patchPiece(parseInt(moveFromId), data1)
+    patchPiece(moveFromId, data1)
     if (moveToId) {
       let data2 = {id: parseInt(moveToId), on_board: false}
       patchPiece(data2)
@@ -85,11 +88,13 @@ function selectMove(e){
 }
 
 function patchPiece(id, data) {
+  debugger
   fetch(`http://localhost:3000/pieces/${id}`, {
     method: "PATCH",
-    mode: "cors",
-    credentials: "same-origin",
-    headers: {"Content-Type": "application/json; charset=utf-8"},
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
     body: JSON.stringify(data)
   })
   .then(resp => resp.json())
@@ -98,9 +103,6 @@ function patchPiece(id, data) {
   })
 }
 
-function patchPlayer(playerId, playerActivePlayer) {
-
-}
 
 
 function movePiece(fromNode, toNode) {
@@ -111,6 +113,10 @@ function movePiece(fromNode, toNode) {
   toNode.dataset.id = fromNode.dataset.id
   toNode.dataset.rank = fromNode.dataset.rank
 
+  if (fromNode.dataset.rank === "sensei") {
+    fromNode.classList.toggle("sensei")
+    toNode.classList.toggle("sensei")
+  }
   fromNode.dataset.color = ""
   fromNode.dataset.id = ""
   fromNode.dataset.rank = ""
@@ -363,4 +369,5 @@ function changePlayerIndication() {
   indicatorBar.classList.toggle("red")
   indicatorBar.classList.toggle("blue")
   indicatorBar.innerHTML = ""
+
 }
