@@ -29,6 +29,7 @@ class Card{
     // }
 
     static chooseFive(){
+        store.cards = [];
         let gameCards = [];
         for(let i = gameCards.length; i < 5; i = gameCards.length){
             gameCards.push(Math.floor(Math.random() * 17))

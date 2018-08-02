@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
   Card.chooseFive()
 
 })
+// C A R D S   I N   C U R E N T  G A M E//
+const store = {cards:[]};
 
 //    F E T C H   R E Q U E S T S     //
 
@@ -90,6 +92,10 @@ function getMoveGridContainer(color,number){
   return document.getElementById(`${color}-card-${number}-move`)
 }
 
+function getCardFromStore(id){
+  return store.cards.find(card => card.id === id)
+}
+
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
@@ -98,18 +104,21 @@ function selectMove(e){
   //changing cards
   const color = e.target.parentElement.id.split("-")[0]
   const containerNumber = e.target.parentElement.id.split("-")[2]
-  const usedCardId = e.currentTarget.dataset.cardId;
-  const onDeckCardId = getOnDeckCardTitle().dataset.cardId;
+  const usedCardId = parseInt(e.currentTarget.dataset.cardId);
+  const onDeckCardId = parseInt(getOnDeckCardTitle().dataset.cardId);
   const buttonContainer = document.getElementById(`${color}-card-${containerNumber}-buttons`)
   buttonContainer.innerHTML = '';
-    getCard(usedCardId).then(card => {
-      const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
-      newCard.moveBoard()
-    })
-    getCard(onDeckCardId).then(card => {
-      const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
-      newCard.cardRender(color, containerNumber)
-    })
+
+   getCardFromStore(usedCardId).moveBoard()
+    // getCard(usedCardId).then(card => {
+    //   const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+    //   newCard.moveBoard()
+    // })
+    getCardFromStore(onDeckCardId).cardRender(color, containerNumber)
+    // getCard(onDeckCardId).then(card => {
+    //   const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+    //   newCard.cardRender(color, containerNumber)
+    // })
   
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
@@ -272,7 +281,11 @@ function activateCard(e) {
   }
   buttonContainer.innerHTML = 'Valid moves for this piece: <br> (click to refresh) <br>'
 
-  getCard(buttonContainer.dataset.cardId).then(card =>{
+  // getCard(buttonContainer.dataset.cardId).then(card =>{
+
+    //get card from store
+    const cardId = parseInt(buttonContainer.dataset.cardId);
+    const card = getCardFromStore(cardId);
     let validMoveCounter = 1;
 
     //evaluate moves validity
@@ -322,7 +335,7 @@ function activateCard(e) {
       }
 
     }
-  })
+  // })
 
 }
 
@@ -345,6 +358,7 @@ function undoLeftoverHighlight(siblings) {
 function createCard(cardId, color, cardContainerNumber){
     getCard(cardId).then(card => {
       const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+      store.cards.push(newCard);
         if(color === "on-deck"){
           newCard.moveBoard()
         }else{
