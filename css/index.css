@@ -1,18 +1,59 @@
 /*   G E N E R A L    S T Y L I N G   */
 
-body {
-  background-color: blanchedalmond
+
+/* fonts available: font-family: 'Modern Antiqua', cursive; font-family: 'Merienda', cursive; */
+
+
+/* grid system */
+
+#upper-container{
+  display: grid;
+
+  grid-template-columns: 25% 50% 25%;
+  grid-row-gap: 1%;
 }
 
-#red-team-container {
+
+
+
+body {
+  background-color: rgb(205, 223, 255);
+
+}
+#general-container{
+  display: grid;
+  grid-template-rows: 20% 50% 30%; 
+}
+
+#upper-container{
+  display: grid;
+
+  grid-template-columns: 25% 50% 25%;
+  grid-row-gap: 1%;
+}
+
+#board-container {
+ display: grid;
+}
+ #board{
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+  grid-gap: .5%;
+
+} 
+
+
+
+/* #red-team-container {
   height: 500px;
   float: left;
   width: 30%;
   display: grid;
   grid-template-rows: repeat(3, 33.3%)
-}
+} */
 
-#board-container {
+/* #board-container {
   float: left;
   width: 40%;
 }
@@ -31,7 +72,10 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 20%);
   grid-template-rows: repeat(5, 20%);
+  /* background-color: bisque; */
 }
+
+
 
 #general-container {
   padding-top: 10px;
@@ -48,7 +92,8 @@ body {
   height: 70px;
   text-align: center;
   color: white;
-  opacity: .7
+  opacity: .7;
+  font-family: 'Merienda';
 }
 
 .fill {
@@ -60,7 +105,7 @@ body {
 .box {
   border: 1px solid rgb(220, 225, 230);
   border-radius: 4px;
-}
+} */
 
 
 /*   C A R D    A R E A    S T Y L I N G   */
@@ -76,11 +121,13 @@ body {
   grid-template-rows: repeat(5, 12%);
   grid-row-gap: 10px;
   grid-column-gap: 10px;
-  background-color: rgb(21, 195, 218);
+  background-color: rgb(21, 188, 218);
 }
-
-span{
-  background-color: blanchedalmond;
+.bgcolor{
+  background-color: rgb(5, 155, 160)
+}
+ span{
+  background-color: rgb(81, 218, 172);
 }
 
 /* .move {
@@ -101,6 +148,22 @@ span{
   visibility: hidden;
 }
 
+#on-deck-card-title, #red-card-1-title, #red-card-2-title, #blue-card-1-title, #blue-card-2-title{
+  font-weight: bolder;
+  font-family: 'Merienda';
+}
+/* card quote styling all boxes */
+#on-deck-card-quote, #red-card-1-quote, #red-card-2-quote, #blue-card-1-quote, #blue-card-2-quote{
+  padding-top: 2px;
+  padding-bottom: 3px;
+  font-family: 'Modern Antiqua';
+  font-size: 85%;
+}
+
+#on-deck-card-buttons{
+  font-family: 'Merienda';
+  font-size: 85%;
+}
 
 /*   P I E C E   S T Y L I N G   */
 
