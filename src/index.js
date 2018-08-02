@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
   Player.getPlayers()
   Card.chooseFive()
+  getResetButton().addEventListener('click', resetGame)
 
 })
 // C A R D S   I N   C U R E N T  G A M E//
@@ -30,10 +31,10 @@ function resetGame(){
     headers:{
       "Content-Type": "application/json; charset=utf-8"
     },
-  })
+  }).then(Player.getPlayers())
 }
 
-function getPlayers(){
+function fetchPlayers(){
   return fetch(`http://127.0.0.1:3000/players/`,{
     method: "GET",
         headers:{
@@ -43,6 +44,9 @@ function getPlayers(){
 }
 
 //    G E T    D O M    E L E M E N T S    //
+function getResetButton(){
+  return document.getElementById(`reset-button`)
+}
 function getPlayerCard(color,num){
     return document.getElementById(`${color}-card-${num}`)
 }
@@ -278,23 +282,27 @@ function hoverPieceOff(e){
   getSquare(x,y).classList.remove('move');
 }
 
+
 // This is where the start of the play happens?
 function pieceButtonClickHandler(e) {
+  event.stopPropagation();
   let square = getSquare(e.target.dataset.x, e.target.dataset.y)
   let siblingButtons = Array.from(e.target.parentElement.children)
-
+  
+  square.classList.add(`highlight`)
   undoLeftoverHighlight(siblingButtons)
 
   square.classList.toggle(`${e.target.dataset.color}`)
-  square.classList.toggle(`highlight`)
+  
   e.target.dataset.clicked = true
 
   clearAllButtonsAndTextFields();
-
   //addevent listenener
   document.getElementById(`${e.target.dataset.color}-card-1`).addEventListener("click", activateCard)
   document.getElementById(`${e.target.dataset.color}-card-2`).addEventListener("click", activateCard)
+
 }
+
 
 
 //     H E L P E R S     //
@@ -386,12 +394,13 @@ function activateCard(e) {
 }
 
 function undoLeftoverHighlight(siblings) {
+  
   siblings.forEach(button => {
     if (button.dataset.clicked === "true") {
       button.dataset.clicked = false
       let thisSquare = getSquare(button.dataset.x, button.dataset.y)
-      thisSquare.classList.toggle(`highlight`)
-      thisSquare.classList.toggle(`${button.dataset.color}`)
+      thisSquare.classList.remove(`highlight`)
+      thisSquare.classList.add(`${button.dataset.color}`)
     }
   })
 }
