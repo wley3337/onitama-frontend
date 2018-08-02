@@ -226,6 +226,21 @@ function hoverOff(e){
 
 }
 
+//----hover over player piece
+function hoverPieceOn(e){
+  event.stopPropagation();
+  const x = e.currentTarget.dataset.x;
+  const y = e.currentTarget.dataset.y;
+  getSquare(x,y).classList.add('highlight');
+}
+
+function hoverPieceOff(e){
+  event.stopPropagation();
+  const x = e.currentTarget.dataset.x;
+  const y = e.currentTarget.dataset.y;
+  getSquare(x,y).classList.remove('highlight');
+}
+
 // This is where the start of the play happens?
 function pieceButtonClickHandler(e) {
   let square = getSquare(e.target.dataset.x, e.target.dataset.y)
