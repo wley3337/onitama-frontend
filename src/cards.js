@@ -7,28 +7,29 @@ class Card{
         this.moves = moves; //this is an array of moves
     }
 
-    cardMoveDisplay(color, cardContainerNumber){
+    // cardMoveDisplay(color, cardContainerNumber){
 
-        //clear move container of numbers
-        const cardMoveHTMLArray = document.getElementById(`${color}-card-${cardContainerNumber}-move`).children;
+    //     //clear move container of numbers
+    //     const cardMoveHTMLArray = document.getElementById(`${color}-card-${cardContainerNumber}-move`).children;
 
-        for(let i = 0; i < cardMoveHTMLArray.length; i++){
-            cardMoveHTMLArray[i].innerText = ''
-            cardMoveHTMLArray[i].classList.remove('move')
-        }
-        const buttonsContainer = document.getElementById(`${color}-card-${cardContainerNumber}-buttons`)
+    //     for(let i = 0; i < cardMoveHTMLArray.length; i++){
+    //         cardMoveHTMLArray[i].innerText = ''
+    //         cardMoveHTMLArray[i].classList.remove('move')
+    //     }
+    //     const buttonsContainer = document.getElementById(`${color}-card-${cardContainerNumber}-buttons`)
 
-        //displays moves on the grid
-        for(const move of this.moves){
-            const square = document.getElementById(`${color}-${cardContainerNumber}-${move.id}`);
-                square.classList.add('move')
-        }
-        //add card ID to button container for search
-        buttonsContainer.dataset.cardId = this.id;
+    //     //displays moves on the grid
+    //     for(const move of this.moves){
+    //         const square = document.getElementById(`${color}-${cardContainerNumber}-${move.id}`);
+    //             square.classList.add('move')
+    //     }
+    //     //add card ID to button container for search
+    //     buttonsContainer.dataset.cardId = this.id;
 
-    }
+    // }
 
     static chooseFive(){
+        store.cards = [];
         let gameCards = [];
         for(let i = gameCards.length; i < 5; i = gameCards.length){
             gameCards.push(Math.floor(Math.random() * 17))
@@ -59,7 +60,6 @@ class Card{
 
     //attempt to dynamicly generate card move board
     moveBoard(){
-       
         getPlayers().then(players => {
            //get Active Player Color
            let activePlayerColor;
@@ -107,9 +107,9 @@ class Card{
                 square.classList.add('move')
         }
 
-
         //display 5th card title
         getOnDeckCardTitle().innerText = this.title;
+        getOnDeckCardTitle().dataset.cardId = this.id;
 
         //display 5th card quote
         getOnDeckCardQuote().innerText = this.quote;
@@ -120,6 +120,50 @@ class Card{
     }
 
 
+
+    cardRender(color, containerNumber){
+        getPlayerCardTitle(color,containerNumber).innerText = this.title;
+        getPlayerCardQuote(color,containerNumber).innerText = this.quote;
+        getPlayerCard(color,containerNumber).dataset.cardId = this.id;
+        // this.cardMoveDisplay(color, cardContainerNumber)
+            //need to add cardId to button container dataset
+        //clear move board
+        getPlayerCardButtons(color,containerNumber).dataset.cardId = this.id;
+            while (getPlayerCardMoveContainer(color,containerNumber).firstChild) {
+                getPlayerCardMoveContainer(color,containerNumber).removeChild(getPlayerCardMoveContainer(color,containerNumber).firstChild);
+            }
+        //creates spans on Dom bassed on color
+        if(color === 'red'){
+            for(let i = 1; i<25;i++){
+                const boardSpan = document.createElement('span');
+                boardSpan.id = `${color}-${containerNumber}-${i}`;
+                getPlayerCardMoveContainer(color,containerNumber).appendChild(boardSpan)
+            };
+            const charSpan = document.createElement('span');
+            charSpan.id = `${color}-${containerNumber}-25`;
+            charSpan.classList.add("character")
+            document.getElementById(`${color}-${containerNumber}-12`).insertAdjacentElement('afterend',charSpan)
+
+        }else{
+            for(let i = 1; i<25;i++){
+                const boardSpan = document.createElement('span');
+                boardSpan.id = `${color}-${containerNumber}-${i}`;
+                getPlayerCardMoveContainer(color,containerNumber).prepend(boardSpan)
+
+            };
+            const charSpan = document.createElement('span');
+            charSpan.id = `${color}-${containerNumber}-25`;
+            charSpan.classList.add("character")
+            document.getElementById(`${color}-${containerNumber}-13`).insertAdjacentElement('afterend',charSpan)
+        }
+
+        //displays moves on the grid
+        for(const move of this.moves){
+            const square = document.getElementById(`${color}-${containerNumber}-${move.id}`);
+                square.classList.add('move')
+        }
+        
+    }
 
 
 }

@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
   Card.chooseFive()
 
 })
+// C A R D S   I N   C U R E N T  G A M E//
+const store = {cards:[]};
 
 //    F E T C H   R E Q U E S T S     //
 
@@ -16,6 +18,17 @@ function getCard(cardId){
             "Content-Type": "application/json; charset=utf-8"
         }
     }).then(response => response.json());
+}
+
+function resetGame(){
+  fetch('http://localhost:3000/players/reset',{
+    method: "GET",
+    mode: "cors",
+    credentials: "same-origin",
+    headers:{
+      "Content-Type": "application/json; charset=utf-8"
+    },
+  })
 }
 
 function getPlayers(){
@@ -42,6 +55,10 @@ function getPlayerCardQuote(color,num){
 
 function getPlayerCardButtons(color,num){
     return document.getElementById(`${color}-card-${num}-buttons`)
+}
+
+function getPlayerCardMoveContainer(color,num){
+  return document.getElementById(`${color}-card-${num}-move`)
 }
 
 function getBoardSquare(x,y){
@@ -75,10 +92,29 @@ function getMoveGridContainer(color,number){
   return document.getElementById(`${color}-card-${number}-move`)
 }
 
+function getCardFromStore(id){
+  return store.cards.find(card => card.id === id)
+}
+
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
-  e.stopPropagation()
+
+  e.stopPropagation();
+
+  //changing cards
+  const color = e.target.parentElement.id.split("-")[0]
+  const containerNumber = e.target.parentElement.id.split("-")[2]
+  const usedCardId = parseInt(e.currentTarget.dataset.cardId);
+  const onDeckCardId = parseInt(getOnDeckCardTitle().dataset.cardId);
+  const buttonContainer = document.getElementById(`${color}-card-${containerNumber}-buttons`)
+  buttonContainer.innerHTML = '';
+
+  getCardFromStore(usedCardId).moveBoard()
+  getCardFromStore(onDeckCardId).cardRender(color, containerNumber)
+
+
+  // piece moving
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
   let moveFromNode = getSquare(pieceLocation.x, pieceLocation.y)
@@ -87,10 +123,12 @@ function selectMove(e){
   let moveToId = moveToNode.dataset.id
 
   movePiece(moveFromNode, moveToNode)
+
   if (evaluateWinConditions()) {
     debugger
     console.log(evaluateWinConditions())
   } else {
+
     // T H I S   I S   T H E   P A T C H   S T U F F
     let data1 = {x: (pieceLocation.x + pieceMove.x), y: (pieceLocation.y + pieceMove.y)}
 
@@ -144,38 +182,6 @@ function patchPiece(id, data) {
   .then(piece => {
     return piece
   })
-  //   let data2 = {active_player: !piece.player.active_player}
-  //   if (piece.player.id === 1) {
-  //     patchPlayerFetch(piece.player.id, data2)
-  //     .then(patchPlayerFetch(2, {active_player: true}))
-  //     .then(resp => {
-  //       if (moveToId) {
-  //         let data2 = {id: moveToId, on_board: false}
-  //         patchPiece(data2)
-  //       }
-  //     })
-  //     .then(piece => {
-  //       debugger
-  //       Player.getPlayers()
-  //     })
-  //
-  //   } else if (piece.player.id === 2) {
-  //     patchPlayerFetch(piece.player.id, data2)
-  //     .then(patchPlayerFetch(1, {active_player: true}))
-  //     .then(resp => {
-  //       if (moveToId) {
-  //         let data2 = {id: moveToId, on_board: false}
-  //         patchPiece(data2)
-  //       }
-  //     })
-  //     .then(resp => {
-  //       debugger
-  //       Player.getPlayers()
-  //     })
-  //   }
-  //   debugger
-  //   return piece
-  // })
 }
 
 function patchPlayerFetch(id, data) {
@@ -249,6 +255,21 @@ function hoverOff(e){
 
 }
 
+//----hover over player piece
+function hoverPieceOn(e){
+  event.stopPropagation();
+  const x = e.currentTarget.dataset.x;
+  const y = e.currentTarget.dataset.y;
+  getSquare(x,y).classList.add('highlight');
+}
+
+function hoverPieceOff(e){
+  event.stopPropagation();
+  const x = e.currentTarget.dataset.x;
+  const y = e.currentTarget.dataset.y;
+  getSquare(x,y).classList.remove('highlight');
+}
+
 // This is where the start of the play happens?
 function pieceButtonClickHandler(e) {
   let square = getSquare(e.target.dataset.x, e.target.dataset.y)
@@ -304,7 +325,9 @@ function activateCard(e) {
   }
   buttonContainer.innerHTML = 'Valid moves for this piece: <br> (click to refresh) <br>'
 
-  getCard(buttonContainer.dataset.cardId).then(card =>{
+    //get card from store
+    const cardId = parseInt(buttonContainer.dataset.cardId);
+    const card = getCardFromStore(cardId);
     let validMoveCounter = 1;
 
     //evaluate moves validity
@@ -352,10 +375,7 @@ function activateCard(e) {
          }
         }
       }
-
     }
-  })
-
 }
 
 function undoLeftoverHighlight(siblings) {
@@ -377,14 +397,12 @@ function undoLeftoverHighlight(siblings) {
 function createCard(cardId, color, cardContainerNumber){
     getCard(cardId).then(card => {
       const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+      store.cards.push(newCard);
         if(color === "on-deck"){
           newCard.moveBoard()
-        }else{
+        } else {
           const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
-          getPlayerCardTitle(color,cardContainerNumber).innerText = newCard.title;
-          getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
-          newCard.cardMoveDisplay(color, cardContainerNumber)
-          getPlayerCard(color,cardContainerNumber).dataset.cardId = card.id;
+          newCard.cardRender(color,cardContainerNumber)
         }
     })
 }
@@ -399,9 +417,6 @@ function getAllBoardPieces() {
   })
   return pieces
 }
-
-
-
 
 
 //     W I N   C O N D I T I O N   H E L P E R S     //
@@ -455,19 +470,10 @@ function winBySenseiPlacement() {
   return result
 }
 
-//     F E T C H   P A T C H E S     //
-
-// active player, piece [x, y, on_board], card player_id
-
-//     C H A N G E   P L A Y E R     //
-
-// √change the player indication, show piece buttons for other player, rotate cards?
-
-
+// do I use this?
 function changePlayerIndication() {
   let indicatorBar = document.querySelector("#indicator-bar")
   indicatorBar.classList.toggle("red")
   indicatorBar.classList.toggle("blue")
   indicatorBar.innerHTML = ""
-
 }
