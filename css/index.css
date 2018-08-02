@@ -4,6 +4,14 @@ body {
   background-color: blanchedalmond
 }
 
+.red-shrine{
+  background-color: rgb(87, 4, 4);
+}
+
+.blue-shrine{
+  background-color: rgb(5, 5, 187);
+}
+
 #red-team-container {
   height: 500px;
   float: left;
