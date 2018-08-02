@@ -60,7 +60,7 @@ class Card{
 
     //attempt to dynamicly generate card move board
     moveBoard(){
-        getPlayers().then(players => {
+        fetchPlayers().then(players => {
            //get Active Player Color
            let activePlayerColor;
            let activePlayerName;
