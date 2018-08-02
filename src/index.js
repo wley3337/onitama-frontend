@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
   Player.getPlayers()
   Card.chooseFive()
+  getResetButton().addEventListener('click', resetGame)
 
 })
 // C A R D S   I N   C U R E N T  G A M E//
@@ -41,6 +42,9 @@ function getPlayers(){
 }
 
 //    G E T    D O M    E L E M E N T S    //
+function getResetButton(){
+  return document.getElementById(`reset-button`)
+}
 function getPlayerCard(color,num){
     return document.getElementById(`${color}-card-${num}`)
 }
