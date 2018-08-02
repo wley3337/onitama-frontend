@@ -13,8 +13,7 @@ class Player {
           let newPiece = new Piece(piece.id, player.id, piece.rank, piece.on_board, piece.color, piece.x, piece.y)
           if (newPiece.on_board) {
             newPiece.renderPieceOnBoard()
-            let color = document.querySelector("#indicator-bar").classList.value
-            if (newPiece.color === color) {newPiece.renderPiecesButtons()}
+            if (player.active_player) {newPiece.renderPiecesButtons()}
           }
         })
       })

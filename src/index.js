@@ -1,3 +1,5 @@
+let promises;
+
 document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
   Player.getPlayers()
@@ -133,7 +135,7 @@ function selectMove(e){
 
     let data1 = {x: (pieceLocation.x + pieceMove.x), y: (pieceLocation.y + pieceMove.y)}
 
-    const promise1 = new Promise(function(resolve) {
+    let promise1 = new Promise(resolve => {
       patchPiece(moveFromId, data1)
       .then(piece => {
         // releasing active player status
@@ -153,18 +155,23 @@ function selectMove(e){
         } else if (player.id === 2){
           request = patchPlayerFetch(1, {active_player: true})
         }
-        return request
+        resolve(request)
       })
     })
 
-    const promise2 = new Promise(function(resolve) {
+    let promise2 = new Promise((resolve, reject) => {
       if (moveToId) {
-        return patchPiece(moveToId, {on_board: false})
+        resolve(patchPiece(moveToId, {on_board: false}))
+      }else{
+        resolve(console.log("no pawn there"))
       }
     })
 
-    Promise.all([promise1, promise2]).then(resp => {
-      debugger
+    promises = [promise1, promise2]
+    Promise.all(promises)
+    .then(resp => {
+      clearAllBoardPieces()
+      clearAllPieceButtons(resp[0].name)
       Player.getPlayers()
     })
   }
@@ -261,14 +268,14 @@ function hoverPieceOn(e){
   event.stopPropagation();
   const x = e.currentTarget.dataset.x;
   const y = e.currentTarget.dataset.y;
-  getSquare(x,y).classList.add('highlight');
+  getSquare(x,y).classList.add('move');
 }
 
 function hoverPieceOff(e){
   event.stopPropagation();
   const x = e.currentTarget.dataset.x;
   const y = e.currentTarget.dataset.y;
-  getSquare(x,y).classList.remove('highlight');
+  getSquare(x,y).classList.remove('move');
 }
 
 // This is where the start of the play happens?
@@ -299,7 +306,6 @@ function initializePlayerIndication(color) {
   indicatorBar.classList.toggle("red")
   indicatorBar.classList.toggle("blue")
 
-  indicatorBar.classList.toggle(color)
   indicatorBar.innerHTML = `<h3>${color} player go!</h3>`
 }
 
@@ -418,6 +424,39 @@ function getAllBoardPieces() {
   })
   return pieces
 }
+
+function getAllBoardPieceNodes() {
+  let allBoardChildren = Array.from(document.querySelector("#board").children)
+  let pieces = []
+  allBoardChildren.forEach(child => {
+    if (child.dataset.id) {
+      pieces.push(child)
+    }
+  })
+  return pieces
+}
+
+function clearAllBoardPieces() {
+  getAllBoardPieceNodes().forEach(piece => {
+    piece.classList = ""
+    piece.classList.add("box")
+    piece.dataset.color = ""
+    piece.dataset.id = ""
+    piece.dataset.rank = ""
+  })
+}
+
+function clearAllPieceButtons(color) {
+  let buttonContainer;
+  if (color === "red") {
+    buttonContainer = document.querySelector("#bluePieceButtonContainer")
+  } else if (color === "blue") {
+    buttonContainer = document.querySelector("#redPieceButtonContainer")
+  }
+  buttonContainer.innerHTML = ""
+}
+
+
 
 
 //     W I N   C O N D I T I O N   H E L P E R S     //

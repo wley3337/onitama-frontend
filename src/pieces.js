@@ -37,10 +37,8 @@ class Piece {
     this.color === "red" ? redContainer.appendChild(button) : blueContainer.appendChild(button)
     // button.addEventListener("mouseover", pieceButtonMouseoverHandler)
     button.addEventListener("click", pieceButtonClickHandler)
-    button.addEventListener('mouseover', hoverPieceOn 
-     )
-     button.addEventListener('mouseout', hoverPieceOff)
-
+    button.addEventListener('mouseover', hoverPieceOn)
+    button.addEventListener('mouseout', hoverPieceOff)
   }
 
 }
