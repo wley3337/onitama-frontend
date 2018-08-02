@@ -18,21 +18,15 @@ function getCard(cardId){
     }).then(response => response.json());
 }
 
-function tryMe(){
-
-  data = {x:1, y:1};
+function resetGame(){
   fetch('http://localhost:3000/players/reset',{
-  method: "GET",
-  mode: "cors",
-  credentials: "same-origin",
-  headers:{
-    "Content-Type": "application/json; charset=utf-8"
-  },
- 
-  }).then(response => response.json())
-  .then(console.log)
-  
-  
+    method: "GET",
+    mode: "cors",
+    credentials: "same-origin",
+    headers:{
+      "Content-Type": "application/json; charset=utf-8"
+    },
+  }) 
 }
 
 function getPlayers(){
@@ -59,6 +53,10 @@ function getPlayerCardQuote(color,num){
 
 function getPlayerCardButtons(color,num){
     return document.getElementById(`${color}-card-${num}-buttons`)
+}
+
+function getPlayerCardMoveContainer(color,num){
+  return document.getElementById(`${color}-card-${num}-move`)
 }
 
 function getBoardSquare(x,y){
@@ -95,6 +93,24 @@ function getMoveGridContainer(color,number){
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
+  e.stopPropagation();
+
+  //changing cards
+  const color = e.target.parentElement.id.split("-")[0]
+  const containerNumber = e.target.parentElement.id.split("-")[2]
+  const usedCardId = e.currentTarget.dataset.cardId;
+  const onDeckCardId = getOnDeckCardTitle().dataset.cardId;
+  const buttonContainer = document.getElementById(`${color}-card-${containerNumber}-buttons`)
+  buttonContainer.innerHTML = '';
+    getCard(usedCardId).then(card => {
+      const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+      newCard.moveBoard()
+    })
+    getCard(onDeckCardId).then(card => {
+      const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
+      newCard.cardRender(color, containerNumber)
+    })
+  
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
   let moveFromNode = getSquare(pieceLocation.x, pieceLocation.y)
@@ -103,6 +119,7 @@ function selectMove(e){
   let moveToId = moveToNode.dataset.id
 
   movePiece(moveFromNode, moveToNode)
+  
   if (evaluateWinConditions()) {
     //make it so someone wins
   } else {
@@ -332,10 +349,11 @@ function createCard(cardId, color, cardContainerNumber){
           newCard.moveBoard()
         }else{
           const newCard = new Card(card.id, card.player_id, card.title, card.quote, card.moves)
-          getPlayerCardTitle(color,cardContainerNumber).innerText = newCard.title;
-          getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
-          newCard.cardMoveDisplay(color, cardContainerNumber)
-          getPlayerCard(color,cardContainerNumber).dataset.cardId = card.id;
+          newCard.cardRender(color,cardContainerNumber)
+          // getPlayerCardTitle(color,cardContainerNumber).innerText = newCard.title;
+          // getPlayerCardQuote(color,cardContainerNumber).innerText = newCard.quote;
+          // newCard.cardMoveDisplay(color, cardContainerNumber)
+          // getPlayerCard(color,cardContainerNumber).dataset.cardId = card.id;
         }
     })
 }
