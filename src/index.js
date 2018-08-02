@@ -78,6 +78,7 @@ function getMoveGridContainer(color,number){
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
+  e.stopPropagation()
   const pieceLocation = {x: parseInt(e.path[0].dataset.pieceX), y: parseInt(e.path[0].dataset.pieceY)};
   const pieceMove = {x: parseInt(e.target.dataset.x), y: parseInt(e.target.dataset.y)}
   let moveFromNode = getSquare(pieceLocation.x, pieceLocation.y)
@@ -87,24 +88,51 @@ function selectMove(e){
 
   movePiece(moveFromNode, moveToNode)
   if (evaluateWinConditions()) {
-    //make it so someone wins
-  } else {
-    changePlayerIndication()
-
-    // T H I S   I S   T H E   P A T C H   S T U F F
-    let data1 = {x: pieceLocation.x, y: pieceLocation.y}
     debugger
-    patchPiece(moveFromId, data1)
-    if (moveToId) {
-      let data2 = {id: parseInt(moveToId), on_board: false}
-      patchPiece(data2)
-    }
+    console.log(evaluateWinConditions())
+  } else {
+    // T H I S   I S   T H E   P A T C H   S T U F F
+    let data1 = {x: (pieceLocation.x + pieceMove.x), y: (pieceLocation.y + pieceMove.y)}
+
+    const promise1 = new Promise(function(resolve) {
+      patchPiece(moveFromId, data1)
+      .then(piece => {
+        // releasing active player status
+        let request
+        if (piece.player.id === 1) {
+          request = patchPlayerFetch(1, {active_player: false})
+        } else if (piece.player.id === 2) {
+          request = patchPlayerFetch(2, {active_player: false})
+        }
+        return request
+      })
+      .then(player => {
+        // transferring active player status
+        let request
+        if (player.id === 1) {
+          request = patchPlayerFetch(2, {active_player: true})
+        } else if (player.id === 2){
+          request = patchPlayerFetch(1, {active_player: true})
+        }
+        return request
+      })
+    })
+
+    const promise2 = new Promise(function(resolve) {
+      if (moveToId) {
+        return patchPiece(moveToId, {on_board: false})
+      }
+    })
+
+    Promise.all([promise1, promise2]).then(resp => {
+      debugger
+      Player.getPlayers()
+    })
   }
 }
 
 function patchPiece(id, data) {
-  debugger
-  fetch(`http://localhost:3000/pieces/${id}`, {
+  return fetch(`http://localhost:3000/pieces/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -114,7 +142,52 @@ function patchPiece(id, data) {
   })
   .then(resp => resp.json())
   .then(piece => {
-    debugger
+    return piece
+  })
+  //   let data2 = {active_player: !piece.player.active_player}
+  //   if (piece.player.id === 1) {
+  //     patchPlayerFetch(piece.player.id, data2)
+  //     .then(patchPlayerFetch(2, {active_player: true}))
+  //     .then(resp => {
+  //       if (moveToId) {
+  //         let data2 = {id: moveToId, on_board: false}
+  //         patchPiece(data2)
+  //       }
+  //     })
+  //     .then(piece => {
+  //       debugger
+  //       Player.getPlayers()
+  //     })
+  //
+  //   } else if (piece.player.id === 2) {
+  //     patchPlayerFetch(piece.player.id, data2)
+  //     .then(patchPlayerFetch(1, {active_player: true}))
+  //     .then(resp => {
+  //       if (moveToId) {
+  //         let data2 = {id: moveToId, on_board: false}
+  //         patchPiece(data2)
+  //       }
+  //     })
+  //     .then(resp => {
+  //       debugger
+  //       Player.getPlayers()
+  //     })
+  //   }
+  //   debugger
+  //   return piece
+  // })
+}
+
+function patchPlayerFetch(id, data) {
+  return fetch(`http://localhost:3000/players/${id}`, {
+    method: "PATCH",
+    headers: {"Content-Type": "application/json; charset=utf-8"},
+    body: JSON.stringify(data)
+  })
+  .then(resp => resp.json())
+  .then(player => {
+    // debugger
+    return player
   })
 }
 
@@ -137,6 +210,7 @@ function clearChildrenText(node){
 
 function movePiece(fromNode, toNode) {
   fromNode.classList.toggle("highlight")
+  // fromNode.classList.toggle(`${fromNode.dataset.color}`)
   toNode.classList.toggle("move")
   toNode.classList.toggle(`${fromNode.dataset.color}`)
   toNode.dataset.color = fromNode.dataset.color
@@ -152,15 +226,7 @@ function movePiece(fromNode, toNode) {
   fromNode.dataset.rank = ""
 }
 
-// function patchPlayerFetch(id, data) {
-//   fetch(`http://localhost:3000/players/${id}`, {
-//     method: "PATCH"
-//     mode: "cors",
-//     credentials: "same-origin",
-//     headers: {"Content-Type": "application/json; charset=utf-8"},
-//     body: JSON.stringify(data)
-//   })
-// }
+
 
 //--------hover function for card buttons on
 function hoverMove(e){
