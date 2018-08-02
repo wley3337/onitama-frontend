@@ -29,17 +29,17 @@ function resetGame(){
     headers:{
       "Content-Type": "application/json; charset=utf-8"
     },
-  })
+  }).then(Player.getPlayers())
 }
 
-function getPlayers(){
-  return fetch(`http://127.0.0.1:3000/players/`,{
-    method: "GET",
-        headers:{
-            "Content-Type": "application/json; charset=utf-8"
-        }
-  }).then(response => response.json())
-}
+// function getPlayers(){
+//   return fetch(`http://127.0.0.1:3000/players/`,{
+//     method: "GET",
+//         headers:{
+//             "Content-Type": "application/json; charset=utf-8"
+//         }
+//   }).then(response => response.json())
+// }
 
 //    G E T    D O M    E L E M E N T S    //
 function getResetButton(){
