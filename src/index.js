@@ -31,7 +31,11 @@ function resetGame(){
     headers:{
       "Content-Type": "application/json; charset=utf-8"
     },
-  }).then(Player.getPlayers())
+  }).then(resp => {
+    clearAllBoardPieces()
+    clearAllPieceButtons("red")
+    Player.getPlayers()
+  })
 }
 
 function fetchPlayers(){
@@ -288,12 +292,12 @@ function pieceButtonClickHandler(e) {
   event.stopPropagation();
   let square = getSquare(e.target.dataset.x, e.target.dataset.y)
   let siblingButtons = Array.from(e.target.parentElement.children)
-  
+
   square.classList.add(`highlight`)
   undoLeftoverHighlight(siblingButtons)
 
   square.classList.toggle(`${e.target.dataset.color}`)
-  
+
   e.target.dataset.clicked = true
 
   clearAllButtonsAndTextFields();
@@ -394,7 +398,7 @@ function activateCard(e) {
 }
 
 function undoLeftoverHighlight(siblings) {
-  
+
   siblings.forEach(button => {
     if (button.dataset.clicked === "true") {
       button.dataset.clicked = false
