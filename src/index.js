@@ -130,6 +130,7 @@ function selectMove(e){
   } else {
 
     // T H I S   I S   T H E   P A T C H   S T U F F
+
     let data1 = {x: (pieceLocation.x + pieceMove.x), y: (pieceLocation.y + pieceMove.y)}
 
     const promise1 = new Promise(function(resolve) {
