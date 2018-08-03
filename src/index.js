@@ -140,7 +140,7 @@ function selectMove(e){
 
   if (evaluateWinConditions()) {
     clearAllPieceButtons(moveToNode.dataset.color)
-    console.log(evaluateWinConditions())
+    document.querySelector("#indicator-bar").innerText = evaluateWinConditions()
   } else {
 
     // T H I S   I S   T H E   P A T C H   S T U F F
@@ -321,9 +321,6 @@ function pieceButtonClickHandler(e) {
 
 function initializePlayerIndication(color) {
   let indicatorBar = document.querySelector("#indicator-bar")
-  indicatorBar.classList.toggle("red")
-  indicatorBar.classList.toggle("blue")
-
   indicatorBar.innerHTML = `<h3>${color} player go!</h3>`
 }
 
@@ -525,9 +522,9 @@ function winBySenseiPlacement() {
 }
 
 // do I use this?
-function changePlayerIndication() {
-  let indicatorBar = document.querySelector("#indicator-bar")
-  indicatorBar.classList.toggle("red")
-  indicatorBar.classList.toggle("blue")
-  indicatorBar.innerHTML = ""
-}
+// function changePlayerIndication() {
+//   let indicatorBar = document.querySelector("#indicator-bar")
+//   indicatorBar.classList.toggle("red")
+//   indicatorBar.classList.toggle("blue")
+//   indicatorBar.innerHTML = ""
+// }
