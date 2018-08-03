@@ -27,7 +27,7 @@ class Piece {
     let blueContainer = document.getElementById("bluePieceButtonContainer")
     let button = document.createElement("button")
 
-    button.innerText = `${this.rank}-${this.id}`
+    button.innerText = `${this.rank}`
     button.dataset.x = this.x
     button.dataset.y = this.y
     button.dataset.color = this.color
