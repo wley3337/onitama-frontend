@@ -164,6 +164,7 @@ function selectMove(e){
         let request
         if (player.id === 1) {
           request = patchPlayerFetch(2, {active_player: true})
+          
         } else if (player.id === 2){
           request = patchPlayerFetch(1, {active_player: true})
         }
@@ -454,8 +455,14 @@ function getAllBoardPieceNodes() {
 
 function clearAllBoardPieces() {
   getAllBoardPieceNodes().forEach(piece => {
-    piece.classList = ""
-    piece.classList.add("box")
+    piece.classList =""
+    if(piece){
+      if(piece.id === "0-2" || piece.id === "4-2"){
+        piece.classList = "box shrine"
+      }else{
+        piece.classList.add("box")
+      }
+  }else{piece.classList.add("box")}
     piece.dataset.color = ""
     piece.dataset.id = ""
     piece.dataset.rank = ""
