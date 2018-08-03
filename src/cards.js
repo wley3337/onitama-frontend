@@ -115,7 +115,7 @@ class Card{
         getOnDeckCardQuote().innerText = this.quote;
 
          //display 5th card "will go to" in button container
-         getOnDeckCardButtonContainer().innerText = `This card will go to: ${activePlayerName}`
+        //  getOnDeckCardButtonContainer().innerText = `This card will go to: ${activePlayerName}`
         })   
     }
 
