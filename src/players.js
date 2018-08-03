@@ -2,7 +2,8 @@ class Player {
 
 //     F E T C H   P L A Y E R   I N F O     //
   static getPlayers() {
-    fetch(`http://localhost:3000/players`)
+    fetch(`https://enigmatic-dusk-38753.herokuapp.com/players`)
+    // fetch(`http://localhost:3000/players`)
     .then(resp => resp.json())
     .then(players => {
       players.forEach(player => {
