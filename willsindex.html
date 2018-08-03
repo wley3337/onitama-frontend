@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Onitama</title>
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merienda|Modern+Antiqua" rel="stylesheet"> 
+    <!-- css style sheets    -->
+    <!-- <link rel="stylesheet" href="css/index.css"> -->
+    <link rel="stylesheet" href="css/willscssindex.css">
+    <!-- javaScript files -->
+    <script src="src/index.js"></script>
+    <script src="src/cards.js"></script>
+    <script src="src/pieces.js"></script>
+    <script src="src/players.js"></script>
+
+  </head>
+  <body>
+    <div id="general-container">
+
+      <div id="top-bar">
+        <div id="photo-place-holder"></div>
+        <div id="indicator-bar" class=" blue"></div>
+        <button id="reset-button">Reset Game</button>
+      </div>
+
+      <div id="upper-container">
+
+        <div id="red-team-container">
+
+          <span class="box" id="redPieceButtonContainer"></span> 
+          <span id="red-card-1"class="box bgcolor">
+              
+                <div id="red-card-1-move" class="card-move">
+                </div>
+                <div class="card-text">
+                  <div id="red-card-1-title">t</div>
+                  <div id="red-card-1-quote">q</div>
+                  <div id="red-card-1-buttons"></div>
+              </div>
+          </span>
+          <span id="red-card-2"class="box bgcolor">
+              
+            <div id="red-card-2-move" class="card-move">
+            </div>
+            <div class="card-text">
+              <div id="red-card-2-title" class="">t</div>
+              <div id="red-card-2-quote">q</div>
+              <div id="red-card-2-buttons"></div>
+           </div>
+            
+          </span>
+        </div>
+
+
+        <div id="board-container">
+          <div id="board">
+            <span id='0-4' class="box"></span>
+            <span id='1-4' class="box"></span>
+            <span id='2-4' class="box"></span>
+            <span id='3-4' class="box"></span>
+            <span id='4-4' class="box"></span>
+
+            <span id='0-3' class="box"></span>
+            <span id='1-3' class="box"></span>
+            <span id='2-3' class="box"></span>
+            <span id='3-3' class="box"></span>
+            <span id='4-3' class="box"></span>
+
+            <span id='0-2' class="box red-shrine"></span>
+            <span id='1-2' class="box"></span>
+            <span id='2-2' class="box"></span>
+            <span id='3-2' class="box"></span>
+            <span id='4-2' class="box blue-shrine"></span>
+
+            <span id='0-1' class="box"></span>
+            <span id='1-1' class="box"></span>
+            <span id='2-1' class="box"></span>
+            <span id='3-1' class="box"></span>
+            <span id='4-1' class="box"></span>
+
+            <span id='0-0' class="box"></span>
+            <span id='1-0' class="box"></span>
+            <span id='2-0' class="box"></span>
+            <span id='3-0' class="box"></span>
+            <span id='4-0' class="box"></span>
+          </div>
+        </div>
+
+
+        <div id="blue-team-container">
+          <span class="box" id="bluePieceButtonContainer"></span>
+          <span id="blue-card-1" class="box bgcolor">
+            <div id="blue-card-1-move" class="card-move">
+            </div>
+            <div class="card-text">
+              <div id="blue-card-1-title">t</div>
+              <div id="blue-card-1-quote">q</div>
+              <div id="blue-card-1-buttons"></div>
+              </div>
+          </span>
+          <span id="blue-card-2" class="box bgcolor">
+            <div id="blue-card-2-move" class="card-move">
+            </div>
+            <div class="card-text">
+              <div id="blue-card-2-title">t</div>
+              <div id="blue-card-2-quote">q</div>
+              <div id="blue-card-2-buttons"></div>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <div id="lower-container">
+        <div id="instructions" class="fill">
+          <span id="red-instructions" class="instructions">
+            <h2>Play Instructions</h2>
+            <h3>Select Pawn:</h3> <p>Select your pawn from the top buttons</p>
+            <h3>Select Card:</h3> <p>Click on the card you would like to use with that pawn</p>
+            <h3>Select Move:</h3> <p>Hover over the options buttons on that card to determine your final move. Click to proceed.</p>
+          </span>
+        </div>
+        <div id="on-deck-card-container" class="box">
+
+                <div id="on-deck-card-move" class="card-move">
+
+              </div>
+              <div id="on-deck-card-info" class="card-text">
+                <div id="on-deck-card-title">t</div>
+                <div id="on-deck-card-quote">q</div>
+                <div id="on-deck-card-buttons"></div>
+              </div>
+
+        </div>
+        <div id="win-conditions" class="fill box">
+            <span id="blue-instructions" class="instructions">
+                <h2>To Win</h2>
+                <h3>The Way of the Stone:</h3> <p>Take all of your oppenent's pieces.</p>
+                <h3>The Way of the Stream:</h3> <p>Move your Sensei piece onto your opponenent's shrine</p>
+              </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
