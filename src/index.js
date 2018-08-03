@@ -13,6 +13,7 @@ const store = {cards:[]};
 //    F E T C H   R E Q U E S T S     //
 
 function getCard(cardId){
+   // return fetch('https://enigmatic-dusk-38753.herokuapp.com/cards'+ cardId, {
    return fetch('http://127.0.0.1:3000/cards/'+ cardId, {
         method: "GET",
         mode: "cors",
@@ -24,6 +25,7 @@ function getCard(cardId){
 }
 
 function resetGame(){
+  // fetch('https://enigmatic-dusk-38753.herokuapp.com/reset',{
   fetch('http://localhost:3000/players/reset',{
     method: "GET",
     mode: "cors",
@@ -39,6 +41,7 @@ function resetGame(){
 }
 
 function fetchPlayers(){
+  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/players/`,{
   return fetch(`http://127.0.0.1:3000/players/`,{
     method: "GET",
         headers:{
@@ -186,6 +189,7 @@ function selectMove(e){
 }
 
 function patchPiece(id, data) {
+  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/pieces/${id}`, {
   return fetch(`http://localhost:3000/pieces/${id}`, {
     method: "PATCH",
     headers: {
@@ -201,6 +205,7 @@ function patchPiece(id, data) {
 }
 
 function patchPlayerFetch(id, data) {
+  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/players/${id}`, {
   return fetch(`http://localhost:3000/players/${id}`, {
     method: "PATCH",
     headers: {"Content-Type": "application/json; charset=utf-8"},
