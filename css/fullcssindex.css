@@ -12,21 +12,28 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  /* backdrop-filter: opacity(.4); */
+  /* backdrop-filter: brightness(20%); */
+  /* backdrop-filter: contrast(30%); */
+ 
 }
 
 #general-container{
   display: grid;
   grid-template-rows: 10% 50% 40%; 
   height: 100%;
+  width: 100%;
+  background-color: rgba(16, 17, 19, 0.452);
 }
 
 button {
   border-radius: 10%;
+  text-transform: capitalize;
 }
 
 
  span{
-  background-color: rgb(205, 223, 255);
+  background-color: rgba(205, 223, 255, 0.8);
 }
 
 
@@ -48,10 +55,12 @@ button {
   grid-column-end: 3; 
   text-align-last: center;
   text-transform: capitalize;
-  font-size: 1.7em;
+  font-size: 200%;
+  color: rgb(225, 229, 233);
 }
 
 #reset-button{
+  color: rgb(225, 229, 233);
   grid-column-start: 3;
   background: transparent;
   border: none;
@@ -71,8 +80,10 @@ button {
 #upper-container{
   margin-top: 1em;
   display: grid;
+  width:100%;
   grid-template-columns: 25% 50% 25%;
- 
+  
+
 }
 
 
@@ -81,25 +92,44 @@ button {
   width: 100%;
   height: 100%;
   display: grid;
-  align-content: center;
+  justify-content: center;
+  justify-self: center;
   grid-template-columns: 19.5% 19.5% 19.5% 19.5% 19.5%;
   grid-template-rows: 19.5% 19.5% 19.5% 19.5% 19.5%;
   grid-gap: .5%;
   align-self: center;
+  background-image: url(../photos/16-picture-of-cloudy-650x447.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: .5%;
 } 
+
+
 .red-shrine{
-  background-color: rgb(87, 4, 4);
+  /* background-color: rgba(205, 223, 255, 0.5); */
+  opacity: 0.8;
+  background-image: url(../photos/mainimage.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.blue-shrine{
+  /* background-color: rgba(205, 223, 255, 0.5); */
+  opacity: 0.8;
+  background-image: url(../photos/mainimage.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
 }
 
-.blue-shrine{
-  background-color: rgb(5, 5, 187);
-}
 
 
 /* red team styling */
 #red-team-container {
   display: grid;
-  grid-template-rows: 30% 30% 30%;
+  grid-template-rows: 25% 37% 37%;
   grid-gap: .5%;
   height: 100%;
   
@@ -107,29 +137,30 @@ button {
 
 #redPieceButtonContainer{
   display: grid;
-  justify-content: center;
-  grid-auto-columns: 100%;
+  width: 100%;
   background: transparent;
-  
-  
-  /* grid-auto-rows: 100%; */
+  grid-column-gap: 1%;
+  grid-template-columns: 19% 19% 19% 19% 19% ;
 }
 
 #red-card-1, #red-card-2{
   display: grid;
-  grid-template-columns: 69% 30%;
+  grid-template-columns: 68.5% 30% .5%;
   grid-row-gap: 1%;
   height: 100%;
   grid-template-areas:
-  "a b";
+  "a b c";
 }
 
 #red-card-1 .card-text, #red-card-2 .card-text{
   grid-area: a;
+  justify-content: center;
+ 
 
 }
 #red-card-1-move, #red-card-2-move{
   grid-area: b;
+  justify-content: center;
 
 }
 
@@ -138,26 +169,40 @@ button {
 
 #blue-team-container {
   display: grid;
-  grid-template-rows: 30% 30% 30%;
+  grid-template-rows: 25% 37% 37%;
   grid-gap: .5%;
   height: 100%;
 }
 
 #bluePieceButtonContainer{
   display: grid;
-  justify-content: center;
-  grid-auto-columns: 60%;
+  width: 100%;
   background: transparent;
-  /* grid-auto-rows: 100%; */
+  grid-column-gap: 1%;
+  grid-template-columns: 19% 19% 19% 19% 19% ;
+  
 }
 
 #blue-card-1, #blue-card-2{
   display: grid;
-  grid-template-columns: 30% 69%;
-  grid-row-gap: 1%;
+  grid-template-columns: .5% 30% 68.5%;
+  grid-column-gap: 1%;
+  grid-template-areas:
+  "c a b";
   height: 100%;
+  
 }
 
+#blue-card-1 .card-text, #blue-card-2 .card-text{
+  justify-content: center;
+  grid-area: b;
+} 
+
+#blue-card-1-move, #blue-card-2-move{
+  justify-content: center;
+  grid-area: a;
+  padding-right: .5%;
+}
 
 
 /* styling shared across cards */
@@ -167,8 +212,9 @@ button {
 }
 
 #red-card-1-move, #red-card-2-move, #blue-card-1-move,  #blue-card-2-move{
-  align-content: center;
-
+  justify-content: center;
+  align-self: center;
+  height: 85%;
   display: grid;
   text-align: center;
   grid-template-columns: 19% 19% 19% 19% 19%;
@@ -183,25 +229,36 @@ button {
   text-align: center;
   font-weight: bolder;
   font-family: 'Merienda';
+  align-self: center;
+  font-size: 110%;
+  padding-top: 2%;
 }
 /* card quote styling all boxes */
 #on-deck-card-quote, #red-card-1-quote, #red-card-2-quote, #blue-card-1-quote, #blue-card-2-quote{
   padding: 2%;
   font-family: 'Modern Antiqua';
   font-size: 85%;
+  align-self: center;
+}
+
+#on-deck-card-buttons, #red-card-1-buttons, #red-card-2-buttons, #blue-card-1-buttons, #blue-card-2-buttons{
+  text-align: center;
 }
 
 /* Lower Container */
 #lower-container{
   display: grid;
   grid-template-columns: 37% 25% 37%;
+  margin-top: 1%;
 
 }
 
 #instructions{
-  background-color: rgba(87, 4, 4, 0.5);
-  color: rgb(190, 190, 199);
-  padding: 3%;
+  /* background-color: rgba(87, 4, 4, 0.5); */
+  /* background-color: rgba(205, 223, 255, 0.5); */
+  font-size: 110%;
+  color: rgb(225, 229, 233);
+  padding: 2%;
   text-align: center;
   font-family: 'Modern Antiqua';
 }
@@ -210,7 +267,8 @@ button {
 
 #on-deck-card-info{
   height: 100%;
-  background-color: rgba(5, 155, 160, 0.5);
+  /* background-color: rgba(5, 155, 160, 0.5); */
+  /* background-color: rgba(205, 223, 255, 0.5); */
   text-align: center;
   color: rgb(233, 236, 14);
   }
@@ -222,6 +280,7 @@ button {
 #on-deck-card-buttons{
   font-family: 'Merienda';
   font-size: 90%;
+  text-transform: uppercase;
   
 }
 
@@ -242,11 +301,14 @@ button {
 
 
 #win-conditions {
-  background-color: rgba(5, 5, 187, 0.5);
-  color: rgb(190, 190, 199);
-  padding: 3%;
+  /* background-color: rgba(5, 5, 187, 0.5); */
+  /* background-color: rgba(16, 17, 19, 0.452); */
+ 
+  padding: 2%;
   text-align: center;
   font-family: 'Modern Antiqua';
+  font-size: 110%;
+  color: rgb(225, 229, 233);
 }
 
 /*   C A R D    A R E A    S T Y L I N G   */
