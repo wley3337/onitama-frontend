@@ -3,8 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Onitama</title>
-    <link rel="stylesheet" href="css/index.css">
-
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merienda|Modern+Antiqua" rel="stylesheet"> 
+    <!-- css style sheets    -->
+    <!-- <link rel="stylesheet" href="css/index.css"> -->
+    <link rel="stylesheet" href="css/fullcssindex.css">
+    <!-- javaScript files -->
     <script src="src/index.js"></script>
     <script src="src/cards.js"></script>
     <script src="src/pieces.js"></script>
@@ -15,6 +19,7 @@
     <div id="general-container">
 
       <div id="top-bar">
+        <div id="photo-place-holder"></div>
         <div id="indicator-bar" class=" blue"></div>
         <button id="reset-button">Reset Game</button>
       </div>
@@ -23,26 +28,27 @@
 
         <div id="red-team-container">
 
-          <span class="box" id="redPieceButtonContainer"></span>
-
-          <span id="red-card-1"class="box ">
-            <div id="red-card-1-move" class="card-move">
-            </div>
-            <div class="card-text">
-              <div id="red-card-1-title">t</div>
-              <div id="red-card-1-quote">q</div>
-              <div id="red-card-1-buttons"></div>
-            </div>
-
+          <span class="box" id="redPieceButtonContainer"></span> 
+          <span id="red-card-1"class="box bgcolor">
+              
+                <div id="red-card-1-move" class="card-move">
+                </div>
+                <div class="card-text">
+                  <div id="red-card-1-title">t</div>
+                  <div id="red-card-1-quote">q</div>
+                  <div id="red-card-1-buttons"></div>
+              </div>
           </span>
-          <span id="red-card-2"class="box ">
+          <span id="red-card-2"class="box bgcolor">
+              
             <div id="red-card-2-move" class="card-move">
             </div>
             <div class="card-text">
-              <div id="red-card-2-title">t</div>
+              <div id="red-card-2-title" class="">t</div>
               <div id="red-card-2-quote">q</div>
               <div id="red-card-2-buttons"></div>
-              </div>
+           </div>
+            
           </span>
         </div>
 
@@ -84,7 +90,7 @@
 
         <div id="blue-team-container">
           <span class="box" id="bluePieceButtonContainer"></span>
-          <span id="blue-card-1" class="box">
+          <span id="blue-card-1" class="box bgcolor">
             <div id="blue-card-1-move" class="card-move">
             </div>
             <div class="card-text">
@@ -93,7 +99,7 @@
               <div id="blue-card-1-buttons"></div>
               </div>
           </span>
-          <span id="blue-card-2" class="box">
+          <span id="blue-card-2" class="box bgcolor">
             <div id="blue-card-2-move" class="card-move">
             </div>
             <div class="card-text">
@@ -106,12 +112,12 @@
       </div>
 
       <div id="lower-container">
-        <div class="fill">
+        <div id="instructions" class="fill">
           <span id="red-instructions" class="instructions">
             <h2>Play Instructions</h2>
-            <h4>Select Pawn:</h4> <p>Select your pawn from the top buttons</p>
-            <h4>Select Card:</h4> <p>Click on the card you would like to use with that pawn</p>
-            <h4>Select Move:</h4> <p>Hover over the options buttons on that card to determine your final move. Click to proceed.</p>
+            <h3>Select Pawn:</h3> <p>Select your pawn from the top buttons</p>
+            <h3>Select Card:</h3> <p>Click on the card you would like to use with that pawn</p>
+            <h3>Select Move:</h3> <p>Hover over the options buttons on that card to determine your final move. Click to proceed.</p>
           </span>
         </div>
         <div id="on-deck-card-container" class="box">
@@ -119,14 +125,20 @@
                 <div id="on-deck-card-move" class="card-move">
 
               </div>
-              <div class="card-text">
+              <div id="on-deck-card-info" class="card-text">
                 <div id="on-deck-card-title">t</div>
                 <div id="on-deck-card-quote">q</div>
                 <div id="on-deck-card-buttons"></div>
               </div>
 
         </div>
-        <div class="fill box"></div>
+        <div id="win-conditions" class="fill box">
+            <span id="blue-instructions" class="instructions">
+                <h2>To Win</h2>
+                <h3>The Way of the Stone:</h3> <p>Take all of your oppenent's pieces.</p>
+                <h3>The Way of the Stream:</h3> <p>Move your Sensei piece onto your opponenent's shrine</p>
+              </span>
+        </div>
       </div>
     </div>
   </body>

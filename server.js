@@ -9,7 +9,7 @@ app.use("/scripts", express.static(__dirname + '/scripts'));
 
 // viewed at based directory http://localhost:8080/
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + 'willsindex.html'));
+  res.sendFile(path.join(__dirname + 'fullindex.html'));
 });
 
 // // add other routes below
