@@ -25,7 +25,7 @@ function getCard(cardId){
 }
 
 function resetGame(){
-  fetch('https://enigmatic-dusk-38753.herokuapp.com/reset',{
+  fetch('https://enigmatic-dusk-38753.herokuapp.com/players/reset',{
   // fetch('http://localhost:3000/players/reset',{
     method: "GET",
     mode: "cors",
@@ -139,7 +139,7 @@ function selectMove(e){
   movePiece(moveFromNode, moveToNode)
 
   if (evaluateWinConditions()) {
-    debugger
+    clearAllPieceButtons(moveToNode.dataset.color)
     console.log(evaluateWinConditions())
   } else {
 
@@ -466,13 +466,8 @@ function clearAllBoardPieces() {
 }
 
 function clearAllPieceButtons(color) {
-  let buttonContainer;
-  if (color === "red") {
-    buttonContainer = document.querySelector("#bluePieceButtonContainer")
-  } else if (color === "blue") {
-    buttonContainer = document.querySelector("#redPieceButtonContainer")
-  }
-  buttonContainer.innerHTML = ""
+  document.querySelector("#bluePieceButtonContainer").innerHTML = ""
+  document.querySelector("#redPieceButtonContainer").innerHTML = ""
 }
 
 
@@ -485,10 +480,10 @@ function evaluateWinConditions() {
   let result2 = winBySenseiPlacement()
   let returnValue
 
-  if (result1 === "red wins" || result2 === "red wins") {
-    returnValue = "red wins"
-  } else if (result1 === "blue wins" || result2 === "blue wins") {
-    returnValue = "blue wins"
+  if (result1 === "RED WINS!" || result2 === "RED WINS!") {
+    returnValue = "RED WINS!"
+  } else if (result1 === "BLUE WINS!" || result2 === "BLUE WINS!") {
+    returnValue = "BLUE WINS!"
   } else if (result1 === false && result2 === false) {
     returnValue = false
   }
@@ -503,9 +498,9 @@ function winByClearingOpponents() {
     piece.color === "red" ? red+=1 : blue+=1
   })
   if (red === 0) {
-    result = "blue wins"
+    result = "BLUE WINS!"
   } else if (blue === 0) {
-    result = "red wins"
+    result = "RED WINS!"
   } else {
     result = false
   }
@@ -518,9 +513,9 @@ function winBySenseiPlacement() {
   pieces.forEach(piece => {
     if (piece.rank === "sensei") {
       if (piece.color === "red" && piece.coordinates === "4-2") {
-        result = "red wins"
+        result = "RED WINS!"
       } else if (piece.color === "blue" && piece.coordinates === "0-2") {
-        result = "blue wins"
+        result = "BLUE WINS!"
       } else {
         result = false
       }
