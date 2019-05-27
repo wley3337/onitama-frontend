@@ -1,5 +1,6 @@
 This is a project with August Giles with the original repo [here](https://github.com/AugustGiles/onitama-frontend)
 
+Heroku deployed version [here](https://onitama-front.herokuapp.com/) -please give time for the front and backend to spin up.
 
 TO DO:
 * remove event listener from player 1's cards when player 2 is active
