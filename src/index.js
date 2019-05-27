@@ -1,5 +1,6 @@
 let promises;
-
+// const BASEURL = "http://127.0.0.1:3000/api/v1"
+const BASEURL =  "https://onitama-back.herokuapp.com/api/v1"
 document.addEventListener("DOMContentLoaded", function() {
   console.log("connected")
   Player.getPlayers()
@@ -13,8 +14,7 @@ const store = {cards:[]};
 //    F E T C H   R E Q U E S T S     //
 
 function getCard(cardId){
-  //  return fetch('https://enigmatic-dusk-38753.herokuapp.com/cards/'+ cardId, {
-   return fetch('http://127.0.0.1:3000/cards/'+ cardId, {
+   return fetch( BASEURL + `/cards/`+ cardId, {
         method: "GET",
         mode: "cors",
         credentials: "same-origin",
@@ -25,8 +25,7 @@ function getCard(cardId){
 }
 
 function resetGame(){
-  // fetch('https://enigmatic-dusk-38753.herokuapp.com/players/reset',{
-  fetch('http://localhost:3000/players/reset',{
+  fetch(BASEURL + '/players/reset',{
     method: "GET",
     mode: "cors",
     credentials: "same-origin",
@@ -41,9 +40,7 @@ function resetGame(){
 }
 
 function fetchPlayers(){
-
-  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/players`,{
-  return fetch(`http://127.0.0.1:3000/players/`,{
+  return fetch(BASEURL + `/players`,{
     method: "GET",
         headers:{
             "Content-Type": "application/json; charset=utf-8"
@@ -113,7 +110,6 @@ function getCardFromStore(id){
 
 //     E V E N T   H A N D L E R S     //
 function selectMove(e){
-
   e.stopPropagation();
 
   //changing cards
@@ -191,8 +187,7 @@ function selectMove(e){
 }
 
 function patchPiece(id, data) {
-  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/pieces/${id}`, {
-  return fetch(`http://localhost:3000/pieces/${id}`, {
+  return fetch(BASEURL + `/pieces/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -207,8 +202,7 @@ function patchPiece(id, data) {
 }
 
 function patchPlayerFetch(id, data) {
-  // return fetch(`https://enigmatic-dusk-38753.herokuapp.com/players/${id}`, {
-  return fetch(`http://localhost:3000/players/${id}`, {
+  return fetch(BASEURL + `/players/${id}`, {
     method: "PATCH",
     headers: {"Content-Type": "application/json; charset=utf-8"},
     body: JSON.stringify(data)
@@ -528,10 +522,3 @@ function winBySenseiPlacement() {
   return result
 }
 
-// do I use this?
-// function changePlayerIndication() {
-//   let indicatorBar = document.querySelector("#indicator-bar")
-//   indicatorBar.classList.toggle("red")
-//   indicatorBar.classList.toggle("blue")
-//   indicatorBar.innerHTML = ""
-// }
